@@ -18,21 +18,19 @@ const workerSchema = new mongoose.Schema({
 	},
 	category: [
 		{
-			name: String,
-			description: String,
+			categoryID: mongoose.Schema.Types.ObjectId,
 			experience: Number,
 		},
-    ],
-    notification: [
-        {
-            message: String,
-            date: {
-                type: Date,
-                default : Date.now()
-            }
-        }
-    ]
-    ,
+	],
+	notification: [
+		{
+			message: String,
+			date: {
+				type: Date,
+				default: Date.now(),
+			},
+		},
+	],
 	dob: {
 		type: Date,
 		required: true,
@@ -53,23 +51,23 @@ const workerSchema = new mongoose.Schema({
 	isVerify: {
 		type: Boolean,
 		default: false,
-    },
-    reviews: [
-        {
-            taskID: {
-                type: mongoose.Schema.Types.ObjectId,
-                required : true
-            },
-            rating: {
-                type: Number,
-                required : true
-            },
-            review: {
-                type: String,
-                required : true
-            }
-        }
-    ]
+	},
+	reviews: [
+		{
+			taskID: {
+				type: mongoose.Schema.Types.ObjectId,
+				required: true,
+			},
+			rating: {
+				type: Number,
+				required: true,
+			},
+			review: {
+				type: String,
+				required: true,
+			},
+		},
+	],
 });
 
 workerSchema.statics.login = async function (email, password) {
