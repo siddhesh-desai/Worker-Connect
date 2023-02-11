@@ -6346,10 +6346,10 @@ figcaption {
     row-gap: 2rem;
     margin-left: 14.7rem;
     gap: 4rem;
-    /* background: rgba(232, 248, 246, 0.8); */
+    background: #fff;
     box-shadow: 4px 7px 8px rgb(0 0 0 / 24%);
-    border-radius: 13px;
-    border: 2px solid black;
+    border-radius: 11px;
+    /* border: 2px solid black; */
 }
 
 .profile-area img{

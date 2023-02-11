@@ -44,12 +44,71 @@
             
             <div class="profile-area-right flex">
                 <p> <b>Name</b>: Sanket Disale</p>
-                <p> <b>Mobail No</b>: 9356456616</p>
+                <p> <b>Mobile No</b>: 9356456616</p>
                 <p> <b>Email</b>: sanketdisale871@gmail.com</p>                
                 <p><b> Address</b>: A.P.Bibwewadi , Pune-411037</p>
                 <p> <b>Location</b> : <a href="https://goo.gl/maps/55pDAPC4o4Udxmf69" target="_blank">LINK</a> </p>
+                <!-- <button class="nav-link cta-button1 w-nav-link" style="width:fit-content; height:fit-content; margin-left: 65%;" >Edit Profile</button> -->
+                <button class="table-accept-btn btn-save1" style="margin-block: 1rem;" id="addTask">Edit Profile</button>
             </div>
         </div>
+        
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px;">
+                <span class="close" id="closeBtn">&times;</span>
+                <h1 style="text-align: center; font-size: 200%; font-weight: bolder;">Edit Profile</h1>
+                <label for="Email-2" class="form-label">Name:</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Name" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Mobile No :</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Mobile No" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Email :</label>
+                <input type="email" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Email ID" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Address:</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Address" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Location :</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Location Map Link" id="Email-2" required="" />
+                <br>
+
+                <br>
+                <br>
+                <!-- <button class="nav-link cta-button1 w-nav-link" style="width: 100%; text-align: center;">A</button> -->
+                <button class="table-accept-btn btn-save1" style="margin-block: 1rem;">Save</button>
+            </div>
+          
+          </div>
     </section>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("addTask");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("btn-save1")[1];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+    </script>
 </body>
 </html>
