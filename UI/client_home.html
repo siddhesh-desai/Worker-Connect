@@ -28,10 +28,10 @@
             <nav role="navigation" class="nav-content w-nav-menu">
                 <div class="nav-menu">
                     <a href="client_home.html" class="nav-link w-nav-link" style="color:#710101;"><b>Home</b></a>
-                    <a href="#" class="nav-link w-nav-link">Add Task</a>
-                    <a href="#" class="nav-link w-nav-link">My Tasks</a>
-                    <a href="#" class="nav-link w-nav-link">Notifications</a>
-                    <a href="#" class="nav-link w-nav-link">My Profile</a>
+                    <a href="#" class="nav-link w-nav-link" id="addTask1">Add Task</a>
+                    <a href="client_mytasks.html" class="nav-link w-nav-link">My Tasks</a>
+                    <a href="client_notification.html" class="nav-link w-nav-link">Notifications</a>
+                    <a href="clientProfile.html" class="nav-link w-nav-link">My Profile</a>
                 </div>
                 
                 <div class="nav-cta-button-container">
@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="grid">
                                 <h2 class="heading h2" style="margin-bottom:30px; text-align: start;">Explore Tasks Here!</h2>
-                                <button class="nav-link cta-button1 w-nav-link">Add a Task!</button>
+                                <button class="nav-link cta-button1 w-nav-link" style="width:fit-content; height:fit-content; margin-left: 65%;" id="addTask">Add a Task!</button>
                             </div>
                             <div class="grid" style="width: 100%; padding:0%">
                               
@@ -120,12 +120,23 @@
         <div id="myModal" class="modal">
 
             <!-- Modal content -->
-            <div class="modal-content" style="padding-left: 50px; padding-top: 30px;">
-              <span class="close" id="closeBtn">&times;</span>
-              <p style="font-weight: bold;">Name: Dom David</p>
-              <p style="font-weight: bold;">Email: dom@gmail.com</p>
-              <p style="font-weight: bold;">Mobile: +91 7558612763</p>
-              <p style="font-weight: bold;">Categories: Carpentry</p>
+            <div class="modal-content" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px;">
+                <span class="close" id="closeBtn">&times;</span>
+                <h1 style="text-align: center; font-size: 200%; font-weight: bolder;">Add a Task!</h1>
+                <label for="Email-2" class="form-label">Task Title:</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Task Title" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Task Description:</label>
+                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Task Descriptions" id="Email-2" required="" />
+                <br>
+                <label for="Email-2" class="form-label">Category:</label>
+                <select name="dog-names" class="text-field no-margin w-input" id="dog-names" style="padding-top: 0%;padding-bottom: 0%;padding-top: 0%; padding-right:50%; font-size: 100%;">
+                    <option value="rigatoni">Carpentry</option>
+                    <option value="dave">Plumbing</option>
+                </select>
+                <br>
+                <br>
+                <button class="nav-link cta-button1 w-nav-link" style="width: 100%; text-align: center;">Add Task</button>
             </div>
           
           </div>
@@ -136,7 +147,35 @@
         var modal = document.getElementById("myModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("viewBtn");
+        var btn = document.getElementById("addTask");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+    </script>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("addTask1");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];

@@ -7,7 +7,14 @@ html {
 body {
     margin: 0
 }
-
+.error_message{
+    text-align: center;
+    padding: .7rem ;
+    background-color: #ee6e6a;
+    border-radius: 1rem;
+    color: white;
+    font-weight: bolder;
+}
 article,
 aside,
 details,
@@ -29,7 +36,7 @@ canvas,
 progress,
 video {
     display: inline-block;
-    vertical-align: baseline;
+    vertical-align: baseline
 }
 
 audio:not([controls]) {
@@ -3028,9 +3035,6 @@ figcaption {
 }
 .text-box._1200px {
     max-width: 1200px;
-}
-.text-box._1500px {
-    max-width: 1500px;
 }
 
 .text-box._500px {
@@ -6115,37 +6119,18 @@ figcaption {
 }
 
 .card {
-    background-color: #fff;
+    background-color: white;
     width: fit-content;
     border: #000;
     border-radius: 5px;
     padding: 20px;
     box-shadow: #000;
 
-}
-
-.card1 {
-    background-color: rgba(113, 1, 1, 0.69);
-    width: fit-content;
-    border: #000;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: #000;
-}
-
-.card2 {
-    background-color: rgba(160, 50, 50, 0.33);
-    width: fit-content;
-    border: #000;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: #000;
 }
 
 .grid {
     display: grid;
     grid-template-columns: auto auto;
-    row-gap: 5%;
     columns: 2;
     padding: 0;
     margin: 0;
@@ -6249,17 +6234,13 @@ figcaption {
   }
   
   /* Modal Content/Box */
-  .flex{
-    display: flex;
-    align-items: center;
-  }
   .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     border-radius: 10px;
-    width: 45%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
   }
   
   /* The Close Button */
@@ -6269,17 +6250,6 @@ figcaption {
     font-size: 28px;
     font-weight: bold;
   }
-
-  .contents-modall{
-        justify-content: space-between;
-  }
-
-  .flex-right-content {
-    flex-direction: column;
-    align-self: flex-start;
-    align-items: flex-start;
-  }
-
   
   .close:hover,
   .close:focus {
@@ -6287,63 +6257,3 @@ figcaption {
     text-decoration: none;
     cursor: pointer;
   }
-
-  /* Admin_category Page*/
-
-  .container{
-    flex-wrap: wrap;
-    /* column-gap: 13rem; */
-    flex-direction: row;
-    margin: 0;
-    justify-content: space-between;
-    row-gap: 2rem;
-    margin-left: 1.7rem;
-  }
-
-  .catogryAddingBtn{
-    text-align: end;
-    margin-bottom: 2rem;
-    margin-right: 1rem;
-  }
-  .category-item{
-    min-width: 30%;
-    padding: 1rem;
-    justify-content: space-between;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 4px 7px 8px rgb(0 0 0 / 24%);
-    border-radius: 13px;
-    border: 2px solid black;
-    gap: 1.5rem;
-  }
-  .category-item-left{
-    flex-direction: column;
-  }
-  .category-item-right{
-    margin-top: 0.6rem;
-    flex-direction: column;
-  }
-
-
-/* Profile CSS*/
-.profile-area{
-    
-    height: 70%;
-    width: 70%;
-    padding-block: 1rem;
-    flex-wrap: wrap;
-    /* column-gap: 13rem; */
-    flex-direction: row;
-    margin: 0;
-    justify-content: center;
-    row-gap: 2rem;
-    margin-left: 14.7rem;
-    gap: 4rem;
-    background: rgba(232, 248, 246, 0.8);
-    box-shadow: 4px 7px 8px rgb(0 0 0 / 24%);
-    border-radius: 13px;
-    border: 2px solid black;
-}
-.profile-area-right{
-    flex-direction: column;
-    align-items: flex-start;
-} 
