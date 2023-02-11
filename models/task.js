@@ -31,12 +31,27 @@ const taskSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				required: true,
 			},
+			time: {
+				type: Date,
+				default : Date.now()
+			},
 			workerPrice: {
-				type: Number,
-				required: true,
+				type: {
+					price: Number,
+					time: {
+						type: Date,
+						default : Date.now()
+					}
+				}
 			},
 			clientPrice: {
-				type: Number,
+				type: {
+					price: Number,
+					time: {
+						type: Date,
+						default : Date.now()
+					}
+				}
             },
             isBooked: {
                 type: Boolean,

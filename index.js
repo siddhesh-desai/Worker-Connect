@@ -62,18 +62,31 @@ app.get('/api/admin/login', (req, res) => {
 
 // Worker Public Routes
 app.post('/api/worker/register', upload.single('addharCard'), workerController.register_post);
+app.get('/api/worker/register', (req, res) => {
+	res.render("worker/register", {errMsg : ""})
+});
 app.post('/api/worker/login', workerController.login_post);
+app.get('/api/worker/login', (req, res) => {
+	res.render("worker/login", {errMsg : ""})
+});
+
 
 // Client Public Routes
 app.post('/api/client/register', clientController.register_post);
+app.get('/api/client/register', (req, res) => {
+	res.render('client/register', { errMsg: '' });
+});
 app.post('/api/client/login', clientController.login_post);
+app.get('/api/client/login', (req, res) => {
+	res.render('client/login', { errMsg: '' });
+});
 
 // Worker Protected Routes
-// app.use("/api/worker/", requireWorkerAuth, workerRoutes)
-app.use('/api/worker/', workerRoutes);
+app.use("/api/worker/", requireWorkerAuth, workerRoutes)
+
 // Client Protected Routes
-// app.use("/api/client/",requireClientAuth,  clientRoutes)
-app.use('/api/client/', clientRoutes);
+app.use('/api/client/', requireClientAuth, clientRoutes);
+
 // Admin Protected Routes
 // app.use("/api/admin/", requireAdminAuth, adminRoutes)
 app.use('/api/admin/', requireAdminAuth, adminRoutes);
