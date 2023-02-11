@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin Login</title>
+    <title>Worker Registration</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
@@ -34,8 +34,8 @@
                 </div>
                 
                 <div class="nav-cta-button-container">
-                    <a href="#" class="nav-link cta-button1 w-nav-link">Log In</a>
-                    <a href="#" class="nav-link cta-button w-nav-link">Register</a>
+                    <a href="workerlogin.html" class="nav-link cta-button1 w-nav-link">Log In</a>
+                    <a href="workerregister.html" class="nav-link cta-button w-nav-link">Register</a>
                 </div>
             </nav>
             <div class="menu-button w-nav-button">
@@ -49,9 +49,9 @@
         <div class="section light-color-gradient wf-section">
             <div class="container">
                 <div class="w-layout-grid hero-grid">
-                    <img src="./assets/admin.jpg" loading="eager" width="470" alt="" class="hero-illustration" />
+                    <img src="./assets/worker.jpg" loading="eager" width="470" alt="" class="hero-illustration" />
                     <div class="text-box _500px">
-                        <h1 class="heading h1">Login as an Admin.</h1>
+                        <h1 class="heading h1">Register as Worker.</h1>
                         <br />
                         <br />
 
@@ -59,12 +59,29 @@
                         <input type="email" class="text-field no-margin w-input" maxlength="256" name="Email-2"
                             data-name="Email 2" placeholder="Enter your email" id="Email-2" required="" />
                         <br />
+                        <label for="Email-2" class="form-label">Mobile Number:</label>
+                        <input type="number" class="text-field no-margin w-input" maxlength="256" name="Email-2"
+                            data-name="Email 2" placeholder="Mobile number" id="Email-2" required="" />
+                        <br/>
                         <label for="Email-2" class="form-label">Password:</label>
                         <input type="password" class="text-field no-margin w-input" maxlength="256" name="Email-2"
                             data-name="Email 2" placeholder="Enter password" id="Email-2" required="" />
                         <br />
-                        <div class="spacer _16"></div>
-                        <a href="#" class="button w-button" style="margin-top: 15px">Login as Admin</a>
+                        <label for="Email-2" class="form-label">Confirm Password:</label>
+                        <input type="password" class="text-field no-margin w-input" maxlength="256" name="Email-2"
+                            data-name="Email 2" placeholder="Confirm password" id="Email-2" required="" />
+                        <br/>
+                        <div class="container2 text-center">
+                            <div class="row">
+                              <span class="col">
+                                <a href="#" class="button w-button" style="margin-top: 15px">Register</a>
+                              </span>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <span class="col">
+                                <a class="account-label" href="workerlogin.html">Already have an account ?</a>
+                              </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
