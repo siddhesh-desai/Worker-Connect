@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Workers - Admin</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+        rel="shortcut icon" type="image/x-icon" />
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+        rel="apple-touch-icon" />
+
+</head>
+
+<body>
+    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav-bar w-nav">
+        <div class="nav-container w-container">
+            <div class="logo-div">
+                <a href="#" aria-current="page" class="logotext" style="margin-right: 275px;"><b>workerConnect</b></a>
+            </div>
+
+            <nav role="navigation" class="nav-content w-nav-menu">
+                <div class="nav-menu">
+                    <a href="admin_home.html" class="nav-link w-nav-link" >Home</a>
+                    <a href="verifyworkers.html" class="nav-link w-nav-link" >Verify Workers</a>
+                    <a href="#" class="nav-link w-nav-link">Categories</a>
+                    <a href="admin_pairings.html" class="nav-link w-nav-link" >Pairings</a>
+                    <a href="admin_clients.html" class="nav-link w-nav-link" >Clients</a>
+                    <a href="admin_workers.html" class="nav-link w-nav-link" style="color:#710101;"><b>Workers</b></a>
+                </div>
+                
+                <div class="nav-cta-button-container">
+                    <a href="#" class="nav-link cta-button1 w-nav-link">Log Out</a>
+                </div>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+                    loading="lazy" width="24" alt="" class="menu-icon" />
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="section light-color-gradient  wf-section" style="padding-top:3%">
+            <div class="container w-container">
+                <div class="text-box _1200px center-align " >
+                    <h2 class="heading h2">Our Workers</h2>
+                    
+                    <table class="styled-table">
+                        <thead>
+                            <tr >
+                                <th>Worker ID</th>
+                                <th>Worker Name</th>
+                                <th>Mobile Number</th>
+                                <th>Tasks Completed</th>
+                                <th>Any Task Active?</th>                                
+                                <th>Rating</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>123456789</th>
+                                <td class="t-name">Siddhesh Desai</td>
+                                <td>+91 75586 12763</td>
+                                <td>10</td>
+                                <td>Yes</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th>123456789</th>
+                                <td class="t-name">Siddhesh Desai</td>
+                                <td>+91 75586 12763</td>
+                                <td>10</td>
+                                <td>Yes</td>
+                                <td>4.5</td>
+                            </tr>
+                            <tr>
+                                <th>123456789</th>
+                                <td class="t-name">Siddhesh Desai</td>
+                                <td>+91 75586 12763</td>
+                                <td>10</td>
+                                <td>Yes</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th>123456789</th>
+                                <td class="t-name">Siddhesh Desai</td>
+                                <td>+91 75586 12763</td>
+                                <td>10</td>
+                                <td>Yes</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <th>123456789</th>
+                                <td class="t-name">Siddhesh Desai</td>
+                                <td>+91 75586 12763</td>
+                                <td>10</td>
+                                <td>Yes</td>
+                                <td>4</td>
+                            </tr>
+                            
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content" style="padding-left: 50px; padding-top: 30px;">
+              <span class="close" id="closeBtn">&times;</span>
+              <p style="font-weight: bold;">Name: Dom David</p>
+              <p style="font-weight: bold;">Email: dom@gmail.com</p>
+              <p style="font-weight: bold;">Mobile: +91 7558612763</p>
+              <p style="font-weight: bold;">Categories: Carpentry</p>
+            </div>
+          
+          </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("viewBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+    </script>
+</body>
+
+</html>

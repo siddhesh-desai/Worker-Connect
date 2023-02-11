@@ -6097,6 +6097,12 @@ figcaption {
     }
 }
 
+.account-label {
+    color: #000;
+    font-weight: 520;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 .form-label {
     color: #000;
