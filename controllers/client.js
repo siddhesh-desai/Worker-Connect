@@ -90,7 +90,7 @@ const addTask_post = (req, res, next) => {
 		var new_task = new Task({
 			title: req.body.title,
 			description: req.body.description,
-			category: req.body.category,
+			categoryID: req.body.categoryID,
 			clientID,
 		});
 		new_task.save(function (err, result) {
@@ -180,6 +180,36 @@ const acceptTaskPrice = async (req, res) => {
 	}
 };
 
+const rejectTaskWorker = async (req, res) => {
+	const clientID = req.clientID || CLIENT_ID;
+	const taskID = req.query.taskID;
+	const intrestedWorkerID = req.query.workerID;
+	try {
+		const task = await Task.findById(taskID);
+		const client = await Client.findById(clientID);
+		if (task === null || !task.clientID.equals(clientID)) {
+			return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+		}
+		await Promise.all([
+			await Task.findOneAndUpdate(
+				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
+				{ $set: { 'intrestedWorkers.$.isRejected': true } }
+            ),
+			await Worker.findByIdAndUpdate(intrestedWorkerID, {
+				$push: {
+					notification: {
+						message: `Client ${client.name} has rejected your Task : "${task.title}", now you cannot futher apply for this task.`,
+					},
+				},
+			}),
+		]);
+		res.status(200).json({ status: 'success', message: 'Client Rejected the Worker Request' });
+	} catch (err) {
+		res.status(500).json({ status: 'fail', message: err.message });
+	}
+};
+
+
 module.exports = {
 	register_post,
 	login_post,
@@ -187,5 +217,6 @@ module.exports = {
 	update_profile_post,
 	addTask_post,
     negotiateTaskPrice,
-    acceptTaskPrice
+	acceptTaskPrice,
+	rejectTaskWorker
 };

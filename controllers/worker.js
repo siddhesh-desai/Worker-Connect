@@ -1,7 +1,8 @@
 const Worker = require('../models/worker');
 const Task = require('../models/task');
-const jwt = require('jsonwebtoken');
 const Client = require('../models/client');
+const Category = require("../models/category")
+const jwt = require('jsonwebtoken');
 
 const WORKER_ID = '63e69b24592703c92e187c8a';
 // create json web token
@@ -90,17 +91,25 @@ const logout = (req, res) => {
 
 const addCategory = async (req, res) => {
 	const workerID = req.workerID || WORKER_ID;
-	const worker = await Worker.findById(workerID);
-	const { name, description, experience } = req.body;
-	const categoryPresent = worker.category.find((work) => work.name === name);
-	if (!categoryPresent) {
-		await worker.updateOne({ $push: { category: { name, description, experience } } });
-		return res.status(200).json({ status: 'success', message: 'New Category Added' });
-	} else {
-		const updatedCategory = worker.category.filter((work) => work.name !== name);
-		updatedCategory.push({ name, description, experience });
-		await worker.updateOne({ $set: { category: updatedCategory } });
-		return res.status(200).json({ status: 'success', message: 'Old Category Updated' });
+	const { categoryID, experience } = req.body;
+	try {
+		const categoryInsideDB = await Category.findById(categoryID)
+		if (!categoryInsideDB) {
+			return res.status(400).json({status : "fail", message : "Category Not Found"})
+		}
+		const worker = await Worker.findById(workerID);
+		const categoryPresent = worker.category.find((work) => work.categoryID.equals(categoryID));
+		if (!categoryPresent) {
+			await worker.updateOne({ $push: { category: { categoryID, experience } } });
+			return res.status(200).json({ status: 'success', message: 'New Category Added' });
+		} else {
+			const updatedCategory = worker.category.filter((work) => !work.categoryID.equals(categoryID));
+			updatedCategory.push({ categoryID, experience });
+			await worker.updateOne({ $set: { category: updatedCategory } });
+			return res.status(200).json({ status: 'success', message: 'Old Category Updated' });
+		}
+	} catch (err) {
+		res.status(400).json({status : "fail", message : err.message})
 	}
 };
 
@@ -108,13 +117,19 @@ const showTaskInterest = async (req, res) => {
 	const workerID = req.workerID || WORKER_ID;
 	const taskID = req.params.id;
 	try {
-		const task = await Task.findById(taskID);
 		const worker = await Worker.findById(workerID);
+		if (!worker || !worker.isVerify) {
+			return res.status(400).json({ status: 'fail', message: 'Worker not Verified' });
+		}
+		const task = await Task.findById(taskID);
 		if (!task) {
 			return res.status(400).json({ status: 'fail', message: 'Task not Found' });
 		}
 		const isWorkerPresent = task.intrestedWorkers.find((worker) => worker.workerID.equals(workerID));
 		if (isWorkerPresent) {
+			if (isWorkerPresent.isRejected) {
+				return res.status(400).json({ status: 'fail', message: 'Worker is Rejected from this Task' });
+			}
 			return res.status(400).json({ status: 'fail', message: 'Worker alredy Intrested' });
 		}
 		await Promise.all([
@@ -137,8 +152,11 @@ const negotiateTaskPrice = async (req, res) => {
 	const workerID = req.workerID || WORKER_ID;
 	const taskID = req.params.id;
 	try {
-		const task = await Task.findById(taskID);
 		const worker = await Worker.findById(workerID);
+		if (!worker || !worker.isVerify) {
+			return res.status(400).json({ status: 'fail', message: 'Worker not Verified' });
+		}
+		const task = await Task.findById(taskID);
 		if (task === null) {
 			return res.status(400).json({ status: 'fail', message: 'Task Not found' });
 		}

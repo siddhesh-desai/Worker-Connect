@@ -14,8 +14,8 @@ const taskSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-	category: {
-		type: String,
+	categoryID: {
+		type: mongoose.Schema.Types.ObjectId,
 		require: true,
 	},
 	isBooked: {
@@ -41,7 +41,11 @@ const taskSchema = new mongoose.Schema({
             isBooked: {
                 type: Boolean,
                 default : false
-            }
+			},
+			isRejected: {
+				type: Boolean,
+                default : false
+			}
 		},
 	],
 });
