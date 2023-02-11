@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Workers - Admin</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+        rel="shortcut icon" type="image/x-icon" />
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+        rel="apple-touch-icon" />
+
+</head>
+
+<body>
+    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav-bar w-nav">
+        <div class="nav-container w-container">
+            <div class="logo-div">
+                <a href="/api/admin/dashboard" aria-current="page" class="logotext" style="margin-right: 275px;"><b>workerConnect</b></a>
+            </div>
+
+            <nav role="navigation" class="nav-content w-nav-menu">
+                <div class="nav-menu">
+                    <a href="/api/admin/dashboard" class="nav-link w-nav-link" >Dashboard</a>
+                    <!-- <a href="verifyworkers.html" class="nav-link w-nav-link" >Verify Workers</a> -->
+                    <a href="/api/admin/workers" class="nav-link w-nav-link" style="color:#710101;"><b>Workers</b></a>
+                    <a href="/api/admin/categories" class="nav-link w-nav-link">Categories</a>
+                    <a href="admin_pairings.html" class="nav-link w-nav-link" >Pairings</a>
+                    <a href="/api/admin/clients" class="nav-link w-nav-link" >Clients</a>
+                </div>
+                
+                <div class="nav-cta-button-container">
+                    <a href="#" class="nav-link cta-button1 w-nav-link">Log Out</a>
+                </div>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+                    loading="lazy" width="24" alt="" class="menu-icon" />
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="section light-color-gradient  wf-section" style="padding-top:3%">
+            <div class="container w-container">
+                <div class="text-box _1200px center-align " >
+                    <h2 class="heading h2">Our Workers</h2>
+                    
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Worker Name</th>
+                                <th>Email</th>
+                                <th>Mobile Number</th>
+                                <th>ID Proof</th>
+                                <th>Action</th>
+                                <th>DOB</th>
+                                <th>Qualification</th>
+                                <th>Address</th>
+                                <th>joining Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i=0; i<workers.length; i++) { %>
+                                    <tr>
+                                        <td class="t-name"><%= workers[i].name %></td>
+                                        <td><%= workers[i].email %></td>
+                                        <td><%= workers[i].phone %></td>
+                                        <td><button class="table-view-btn" id="viewBtn<%=i%>">View</button></td>
+                                        <td>
+                                            <button class="table-accept-btn" style="margin: 0.2rem 0;"><a href="/api/admin/verify/accept/<%=workers[i]._id%>" style="color: white; text-decoration: none; font-weight: bold;" >Accept</a></button>
+                                            <button class="table-reject-btn" style="margin: 0.2rem 0;"><a href="/api/admin/verify/reject/<%=workers[i]._id%>" style="color: white; text-decoration: none; font-weight: bold;">Reject</a></button>
+                                        </td>
+                                        <td><%= workers[i].dob.getDate() %>/<%= workers[i].dob.getMonth() + 1 %>/<%= workers[i].dob.getFullYear() %></td>
+                                        <td><%= workers[i].highestQualification %></td>
+                                        <td><a href="<%=workers[i].address%>" target="_blank">Address</a></td>
+                                        <td><%= workers[i].joiningDate.getDate() %>/<%= workers[i].joiningDate.getMonth() + 1 %>/<%= workers[i].joiningDate.getFullYear() %></td>
+                                        <% if(workers[i].isVerify) { %>
+                                        <td style="padding: 1rem;background-color: green;  color: white;">Verify</td>
+                                        <% } else {%>
+                                            <td style="padding: 1rem;background-color: red;  color: white;">Not Verify</td>
+                                        <% } %>
+                                    </tr>
+                            <% } %>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <% for(let i=0; i<workers.length; i++) { %>
+                <div id="myModal<%=i%>" class="modal">
+                    <div class="modal-content" style="padding-left: 50px; padding-top: 30px">
+                        <div class="closing-btn">
+                            <span class="close close<%=i%>" id="closeBtn">&times;</span>
+                            <h1>Addhar Card : <%=workers[i].name%></h1>
+                        </div>
+                        <div class="contents-modall flex">
+                            <div class="flex-left-content">
+                                <img src="/upload/<%=workers[i].addharCard%>" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <% } %>
+    </div>
+
+    <script>
+        for(let i=0; i<"<%=workers.length%>"; i++){
+
+                document.getElementById('viewBtn'+i).onclick = function () {
+                    document.getElementById('myModal'+i).style.display = 'block';
+                };
+                window.onclick = function (event) {
+                    if (event.target ==  document.getElementById('myModal'+i)) {
+                        document.getElementById('myModal'+i).style.display = 'none';
+                    }
+                };
+                var span = document.getElementsByClassName('close')[0];
+                document.getElementsByClassName('close'+i)[0].onclick = function () {
+                    document.getElementById('myModal'+i).style.display = 'none';
+                };
+        }
+    </script>
+</body>
+
+</html>

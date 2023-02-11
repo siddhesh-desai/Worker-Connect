@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home - Client</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+        rel="shortcut icon" type="image/x-icon" />
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+        rel="apple-touch-icon" />
+
+</head>
+
+<body>
+    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav-bar w-nav">
+        <div class="nav-container w-container">
+            <div class="logo-div">
+                <a href="#" aria-current="page" class="logotext" style="margin-right: 350px;"><b>workerConnect</b></a>
+            </div>
+
+            <nav role="navigation" class="nav-content w-nav-menu">
+                <div class="nav-menu">
+                    <a href="worker_home.html" class="nav-link w-nav-link" style="color:#710101;"><b>Home</b></a>
+                    <a href="#" class="nav-link w-nav-link" id="addTask1">My Clients</a>
+                    <a href="worker_myworks.html" class="nav-link w-nav-link">My Works</a>
+                    <a href="worker_notification.html" class="nav-link w-nav-link">Notifications</a>
+                    <a href="#" class="nav-link w-nav-link">My Profile</a>
+                </div>
+                
+                <div class="nav-cta-button-container">
+                    <a href="/api/worker/logout" class="nav-link cta-button1 w-nav-link">Log Out</a>
+                </div>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+                    loading="lazy" width="24" alt="" class="menu-icon" />
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="section light-color-gradient  wf-section" style="padding-top:3%; width: 100%;">
+            <div class="container w-container" style="width: 100%; padding: 0px;">
+                <div class="text-box _1500px center-align " >
+                    <div class="container" style="width: 100%;">
+                        <div class="row">
+                            <div class="grid">
+                                <h2 class="heading h2" style="margin-bottom:30px; text-align: start;">Available tasks</h2>
+                            </div>
+                            <div class="grid" style="width: 100%; padding:0%">
+                              <% for(let i=0; i<tasks.length; i++) { %>
+                                <div class="card" style="width: 95%; margin:0px; padding-left: 5%;">
+                                    <div class="card-body" >
+                                        <p class="card-text" style="color: #000; font-size: 200%; font-weight: bold;text-align: start;margin-bottom: 0px;"><%=tasks[i].title%></p>
+                                        <h1 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: start; margin-top: 1%; margin-bottom: 0%;">Category: <%=tasks[i].category%></h1>
+                                        <h1 class="card-title" style="color: #616161; font-size: medium; font-weight: bold;text-align: start;margin-top: 2%;margin-bottom: 0%;"> <%= tasks[i].createdAt.getDate() %>/<%= tasks[i].createdAt.getMonth() + 1 %>/<%= tasks[i].createdAt.getFullYear() %></h1>
+                                        <h1 class="card-title" style="color: #a33434; font-size: medium; font-weight: bold;text-align: end;margin-top: 1%;margin-bottom: 0%;"><%= tasks[i].intrestedWorkers.length %> Workers have applied!</h1>
+                                        <% if(isVerify) { %>
+                                        <button id="applybtns<%=i%>" class="button w-button" style="margin-top: 15px; background-color: #710101">Apply for the task</button>
+                                        <% } else { %>
+                                            <button id="" class="button w-button" style="margin-top: 15px; cursor: not-allowed;  background-color: #710101">You are not Verified</button>
+                                            <% } %>
+                                    </div>
+                                </div>
+                              <% } %>
+                           
+                              
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <% for(let i=0; i<tasks.length; i++) { %>
+            <div id="myModal<%=i%>" class="modal">
+                <!-- Modal content -->
+                <form action="/api/worker/task/show/intrest/<%=tasks[i]._id%>" method="post">
+                    <div class="modal-content" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px;">
+                        <span style="font-size: 1.5rem; font-weight: bold; cursor: pointer;" id="closeBtn<%=i%>">&times;</span>
+                        <p style="text-align: center; font-size: 200%; font-weight: bolder;"><u>Apply for : <%= tasks[i].title %></u></p>
+                        <label for="Email-2" class="form-label">Enter the price :</label>
+                        <input type="number" class="text-field no-margin w-input" maxlength="256" name="price" data-name="Email 2" placeholder="Enter the amount" id="Email-2" required />
+                        <br>
+                        <br>
+                        <% if(isVerify) {%>
+                        <button class="nav-link cta-button1 w-nav-link" type="submit" style="width: 100%; text-align: center;">Add Task</button>
+                        <% } %>
+                    </div>
+                </form>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        // Get the modal
+        for(let i=0; i<"<%=tasks.length%>"; i++){
+            document.getElementById("applybtns"+i).onclick = function() {
+                document.getElementById("myModal"+i).style.display = "block";
+            }
+            document.getElementById("closeBtn"+i).onclick = function() {
+                document.getElementById("myModal"+i).style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == document.getElementById("myModal"+i)) {
+                    document.getElementById("myModal"+i).style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    
+</body>
+
+</html>

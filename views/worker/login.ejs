@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>Admin Login</title>
+		<title>Worker Login</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link href="/styles.css" rel="stylesheet" type="text/css" />
@@ -37,7 +37,7 @@
 
 				<nav role="navigation" class="nav-content w-nav-menu">
 					<div class="nav-menu">
-						<a href="/api/admin/dashboard" class="nav-link w-nav-link">Dashboard</a>
+						<a href="#" class="nav-link w-nav-link">Home</a>
 						<a href="#" class="nav-link w-nav-link">About Us</a>
 						<a href="#" class="nav-link w-nav-link">For Clients</a>
 						<a href="#" class="nav-link w-nav-link">For Workers</a>
@@ -45,8 +45,8 @@
 					</div>
 
 					<div class="nav-cta-button-container">
-						<a href="/api/admin/login" class="nav-link cta-button1 w-nav-link">Log In</a>
-						<!-- <a href="#" class="nav-link cta-button w-nav-link">Register</a> -->
+						<a href="/api/worker/login" class="nav-link cta-button1 w-nav-link">Log In</a>
+						<a href="/api/worker/register" class="nav-link cta-button w-nav-link">Register</a>
 					</div>
 				</nav>
 				<div class="menu-button w-nav-button">
@@ -65,43 +65,45 @@
 			<div class="section light-color-gradient wf-section">
 				<div class="container">
 					<div class="w-layout-grid hero-grid">
-						<img src="/assets/admin.jpg" loading="eager" width="470" alt="" class="hero-illustration" />
-						<div class="text-box _500px">
-                            <% if(errMsg !== '') { %>
-                            <p class="error_message"><%= errMsg %></p>
-                            <% } %>
-							<h1 class="heading h1">Login as an Admin.</h1>
-							<br />
-							<br />
-                            <form action="/api/admin/login" method="post">
-							<label for="Email-2" class="form-label">Username:</label>
-							<input
-								type="text"
-								class="text-field no-margin w-input"
-								maxlength="256"
-								name="username"
-								data-name="Email 2"
-								placeholder="Enter your username"
-								id="Email-2"
-								required
-							/>
-							<br />
-							<label for="Email-2" class="form-label">Password:</label>
-							<input
-								type="password"
-								class="text-field no-margin w-input"
-								maxlength="256"
-								name="password"
-								data-name="Email 2"
-								placeholder="Enter password"
-								id="Email-2"
-								required
-							/>
-							<br />
-							<div class="spacer _16"></div>
-							<button type="submit" class="button w-button" style="margin-top: 15px">Login as Admin</button>
-                        </form>
-						</div>
+						<img src="/assets/worker.jpg" loading="eager" width="470" alt="" class="hero-illustration" />
+						<form action="/api/worker/login" method="post">
+							<div class="text-box _500px">
+								<% if(errMsg !== '') { %>
+								<p class="error_message"><%= errMsg %></p>
+								<% } %>
+								<h1 class="heading h1">Login as a Worker.</h1>
+								<br />
+								<br />
+
+								<label for="Email-2" class="form-label">Email address:</label>
+								<input
+									type="email"
+									class="text-field no-margin w-input"
+									maxlength="256"
+									name="email"
+									data-name="Email 2"
+									placeholder="Enter your email"
+									id="Email-2"
+									required=""
+								/>
+								<br />
+								<label for="Email-2" class="form-label">Password:</label>
+								<input type="password" class="text-field no-margin w-input" maxlength="256" name="password"
+								data-name="Email 2" placeholder="Enter password" id="Email-2" required="" />
+								<br />
+								<div class="container2 text-center">
+									<div class="row">
+										<span class="col">
+											<button type="submit" class="button w-button" style="margin-top: 15px">Login as Worker</button>
+										</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="col">
+											<a class="account-label" href="/api/worker/register">Don't have an Account?</a>
+										</span>
+									</div>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

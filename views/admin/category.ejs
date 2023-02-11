@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link
+			href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+			rel="shortcut icon"
+			type="image/x-icon"
+		/>
+		<link
+			href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+			rel="apple-touch-icon"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+			crossorigin="anonymous"
+		/>
+		<link href="/styles.css" rel="stylesheet" type="text/css" />
+
+		<title>Categories</title>
+	</head>
+	<body>
+		<!-- Navbar Section  -->
+		<div
+			data-collapse="small"
+			data-animation="default"
+			data-duration="400"
+			data-easing="ease"
+			data-easing2="ease"
+			role="banner"
+			class="nav-bar w-nav"
+		>
+			<div class="nav-container w-container">
+				<div class="logo-div">
+					<a href="/api/admin/dashboard" aria-current="page" class="logotext" style="margin-right: 275px"><b>workerConnect</b></a>
+				</div>
+
+				<nav role="navigation" class="nav-content w-nav-menu">
+					<div class="nav-menu">
+						<a href="/api/admin/dashboard" class="nav-link w-nav-link">Dashboard</a>
+						<!-- <a href="verifyworkers.html" class="nav-link w-nav-link">Verify Workers</a> -->
+						<a href="/api/admin/workers" class="nav-link w-nav-link">Workers</a>
+						<a href="/api/admin/categories" class="nav-link w-nav-link" style="color: #710101"><b>Categories</b></a>
+						<a href="admin_pairings.html" class="nav-link w-nav-link">Pairings</a>
+						<a href="/api/admin/clients" class="nav-link w-nav-link">Clients</a>
+					</div>
+
+					<div class="nav-cta-button-container">
+						<a href="#" class="nav-link cta-button1 w-nav-link">Log Out</a>
+					</div>
+				</nav>
+				<div class="menu-button w-nav-button">
+					<img
+						src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+						loading="lazy"
+						width="24"
+						alt=""
+						class="menu-icon"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Categories section  -->
+		<section class="category-section light-color-gradient" style="margin-top: 2rem">
+			<div class="container catogryAddingBtn">
+				<button class="table-accept-btn btn-add" onclick="showAddModel()">Add Categories</button>
+			</div>
+			<div class="container flex">
+				<% for(let i=0; i<categories.length; i++) { %>
+                    <div class="category-item flex">
+                        <div class="category-item-left">
+                            <p>Catogory: <%=categories[i].name%></p>
+                            <button class="table-accept-btn" onclick="showEditModel('<%=categories[i]._id%>')">Edit</button>
+                            <button class="table-reject-btn" onclick="showRemoveAlert('<%=categories[i]._id%>')">Remove</button>
+                        </div>
+                        <div class="category-item-right">
+                            <p>Workers</p>
+                            <p style="text-align: center">785</p>
+                        </div>
+                    </div>
+                <% } %>                
+			</div>
+
+			<div id="catModel1" class="modal">
+                <form action="/api/admin/edit/category" method="post">
+                    <div class="modal-content" style="padding-left: 50px; padding-top: 30px">
+                        <label for="exampleFormControlInput1" class="form-label"> Enter Category Name :</label>
+                        <input type="text" class="form-control" required name="name" id="exampleFormControlInput1" placeholder="Catogory Name" />
+                        <input type="text" required class="form-control" name="id" readonly style="display: none"  id="editReadonlyInput" >
+                        <button class="table-accept-btn btn-save" type="submit" style="margin-block: 1rem">Edit Category</button>
+                    </div>
+                </form>
+			</div>
+			<div id="catModel2" class="modal">
+				<div class="modal-content" style="padding-left: 50px; padding-top: 30px">
+					<p>Are You Sure ?</p>
+					<p class="btnss">
+						<a href="" class="table-accept-btn btn-save1" id="deleteHref" style="margin-block: 1rem">Yes</a>
+						<button class="table-accept-btn btn-save1" style="margin-block: 1rem">No</button>
+					</p>
+				</div>
+			</div>
+
+			<div id="catModel3" class="modal">
+                <form action="/api/admin/add/category" method="post">
+				<div class="modal-content" style="padding-left: 50px; padding-top: 30px">
+					<label for="exampleFormControlInput1" class="form-label"> Enter New Category </label>
+					<input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder=" New Catogory Name" />
+					<button class="table-accept-btn btn-save2" type="submit" style="margin-block: 1rem">Create New Category</button>
+				</div>
+                </form>
+			</div>
+		</section>
+
+		<script>
+			function showEditModel(id) {
+                // console.log(id)
+				var modal = document.getElementById('catModel1');
+				let span = document.getElementsByClassName('btn-save')[0];
+				modal.style.display = 'block';
+                document.getElementById("editReadonlyInput").value = id
+				// span.onclick = function () {
+				// 	// modal.style.display = 'none';
+				// };
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function (event) {
+					if (event.target == modal) {
+						modal.style.display = 'none';
+					}
+				};
+			}
+
+			function showRemoveAlert(id) {
+				var modal = document.getElementById('catModel2');
+				let span1 = document.getElementsByClassName('btn-save1')[1];
+				let span2 = document.getElementsByClassName('btn-save1')[0];
+				modal.style.display = 'block';
+                document.getElementById("deleteHref").href = "/api/admin/delete/category/"+id
+				span1.onclick = function () {
+					modal.style.display = 'none';
+				};
+				span2.onclick = function () {
+					modal.style.display = 'none';
+				};
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function (event) {
+					if (event.target == modal) {
+						modal.style.display = 'none';
+					}
+				};
+			}
+
+			function showAddModel() {
+				var modal = document.getElementById('catModel3');
+				let span = document.getElementsByClassName('btn-save2')[0];
+				modal.style.display = 'block';
+
+				span.onclick = function () {
+					modal.style.display = 'none';
+				};
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function (event) {
+					if (event.target == modal) {
+						modal.style.display = 'none';
+					}
+				};
+			}
+		</script>
+	</body>
+</html>
