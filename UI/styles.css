@@ -3029,6 +3029,9 @@ figcaption {
 .text-box._1200px {
     max-width: 1200px;
 }
+.text-box._1500px {
+    max-width: 1500px;
+}
 
 .text-box._500px {
     max-width: 500px;
@@ -6124,6 +6127,7 @@ figcaption {
 .grid {
     display: grid;
     grid-template-columns: auto auto;
+    row-gap: 5%;
     columns: 2;
     padding: 0;
     margin: 0;
