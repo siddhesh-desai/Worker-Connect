@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Workers - Admin</title>
+    <title>Clients - Admin</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
 
     <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
         rel="shortcut icon" type="image/x-icon" />
@@ -22,17 +22,17 @@
         role="banner" class="nav-bar w-nav">
         <div class="nav-container w-container">
             <div class="logo-div">
-                <a href="#" aria-current="page" class="logotext" style="margin-right: 275px;"><b>workerConnect</b></a>
+                <a href="/api/admin/dashboard" aria-current="page" class="logotext" style="margin-right: 275px;"><b>workerConnect</b></a>
             </div>
 
             <nav role="navigation" class="nav-content w-nav-menu">
                 <div class="nav-menu">
-                    <a href="admin_home.html" class="nav-link w-nav-link" >Home</a>
-                    <a href="verifyworkers.html" class="nav-link w-nav-link" >Verify Workers</a>
-                    <a href="admin_cateogory.html" class="nav-link w-nav-link">Categories</a>
+                    <a href="/api/admin/dashboard" class="nav-link w-nav-link" >Dashboard</a>
+                    <!-- <a href="verifyworkers.html" class="nav-link w-nav-link" >Verify Workers</a> -->
+                    <a href="/api/admin/workers" class="nav-link w-nav-link">Workers</a>
+                    <a href="/api/admin/categories" class="nav-link w-nav-link">Categories</a>
                     <a href="admin_pairings.html" class="nav-link w-nav-link" >Pairings</a>
-                    <a href="admin_clients.html" class="nav-link w-nav-link" >Clients</a>
-                    <a href="admin_workers.html" class="nav-link w-nav-link" style="color:#710101;"><b>Workers</b></a>
+                    <a href="/api/admin/clients" class="nav-link w-nav-link" style="color:#710101;"><b>Clients</b></a>
                 </div>
                 
                 <div class="nav-cta-button-container">
@@ -50,63 +50,30 @@
         <div class="section light-color-gradient  wf-section" style="padding-top:3%">
             <div class="container w-container">
                 <div class="text-box _1200px center-align " >
-                    <h2 class="heading h2">Our Workers</h2>
+                    <h2 class="heading h2">Our Clients</h2>
                     
                     <table class="styled-table">
                         <thead>
                             <tr >
-                                <th>Worker ID</th>
-                                <th>Worker Name</th>
+                                <th>Client ID</th>
+                                <th>Client Name</th>
+                                <th>Client Email</th>
                                 <th>Mobile Number</th>
-                                <th>Tasks Completed</th>
-                                <th>Any Task Active?</th>                                
-                                <th>Rating</th>                                
+                                <th>Joining Date</th>
+                                <th>Tasks Posted</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>123456789</th>
-                                <td class="t-name">Siddhesh Desai</td>
-                                <td>+91 75586 12763</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <th>123456789</th>
-                                <td class="t-name">Siddhesh Desai</td>
-                                <td>+91 75586 12763</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>4.5</td>
-                            </tr>
-                            <tr>
-                                <th>123456789</th>
-                                <td class="t-name">Siddhesh Desai</td>
-                                <td>+91 75586 12763</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <th>123456789</th>
-                                <td class="t-name">Siddhesh Desai</td>
-                                <td>+91 75586 12763</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <th>123456789</th>
-                                <td class="t-name">Siddhesh Desai</td>
-                                <td>+91 75586 12763</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>4</td>
-                            </tr>
-                            
-                            
-                            
+                            <% for(let i=0; i<clients.length; i++){ %>
+                                <tr>
+                                    <th><%= clients[i]._id%></th>
+                                    <td class="t-name"><%= clients[i].name%></td>
+                                    <td class="t-name"><%= clients[i].email%></td>
+                                    <td><%= clients[i].phone%></td>
+                                    <td><%= clients[i].joiningDate.getDate() %>/<%= clients[i].joiningDate.getMonth() + 1 %>/<%= clients[i].joiningDate.getFullYear() %></td>
+                                    <td><%= clients[i].tasks%></td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>

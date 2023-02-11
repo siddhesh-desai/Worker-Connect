@@ -11,4 +11,8 @@ router.post('/negotiate/task/price/:id', workerController.negotiateTaskPrice);
 
 router.get('/logout', workerController.logout);
 
+// UI
+router.get('/home', workerController.renderHome);
+
+
 module.exports = router;

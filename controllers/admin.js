@@ -3,6 +3,7 @@ const Worker = require('../models/worker');
 const Category = require('../models/category');
 const Client = require('../models/client');
 const jwt = require('jsonwebtoken');
+const Task = require('../models/task');
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
@@ -21,12 +22,34 @@ const addCategory_post = (req, res, next) => {
 		new_category.save(function (err, result) {
 			if (err) {
 				console.log(err);
-				res.status(400).json({ message: err.message, status: 'fail' });
+				// res.status(400).json({ message: err.message, status: 'fail' });
+				res.render('admin/login', { errMsg: err.message });
 			} else {
-				res.status(201).json({ status: 'success', data: result });
+				// res.status(201).json({ status: 'success', data: result });
+				res.redirect('/api/admin/categories');
 			}
 		});
 	});
+};
+
+const removeCategory = async (req, res) => {
+	const id = req.params.id;
+	try {
+		await Category.findByIdAndDelete(id);
+		res.redirect('/api/admin/categories');
+	} catch (err) {
+		res.render('client/login', { errMsg: err.message });
+	}
+};
+
+const updateCategory = async (req, res) => {
+	const { id, name } = req.body;
+	try {
+		await Category.findByIdAndUpdate(id, { name });
+		res.redirect('/api/admin/categories');
+	} catch (err) {
+		res.render('client/login', { errMsg: err.message });
+	}
 };
 
 const register_post = (req, res, next) => {
@@ -48,7 +71,8 @@ const register_post = (req, res, next) => {
 };
 
 const update_profile_post = async (req, res, next) => {
-	const adminID = req.adminID || '63e64569ac9e4267da000597';
+	// const adminID = req.adminID || '63e64569ac9e4267da000597';
+	const adminID = req.adminID;
 	var updatedAdmin = {
 		username: req.body.username,
 		password: req.body.password,
@@ -89,7 +113,7 @@ const verifyAccept = async (req, res) => {
 		const worker = await Worker.findById(workerID);
 		if (worker === null) {
 			// return res.status(400).json({ status: 'fail', message: 'Worker Not Found' });
-			return res.redirect("/api/admin/dashboard")
+			return res.redirect('/api/admin/dashboard');
 		}
 		// await worker.updateOne({ $set: { isVerify: true } });
 		await worker.updateOne({
@@ -100,12 +124,11 @@ const verifyAccept = async (req, res) => {
 			},
 			$set: { isVerify: true },
 		});
-		res.redirect("/api/admin/dashboard")
+		res.redirect('/api/admin/dashboard');
 		// res.status(200).json({ status: 'success', message: 'Worker Verification request is Accepted.' });
 	} catch (err) {
 		// res.status(500).json({ status: 'fail', message: err.message });
-		res.redirect("api/admin/login")
-
+		res.redirect('api/admin/login');
 	}
 };
 
@@ -115,7 +138,7 @@ const verifyRejected = async (req, res) => {
 		const worker = await Worker.findById(workerID);
 		if (worker === null) {
 			// return res.status(400).json({ status: 'fail', message: 'Worker Not Found' });
-			return res.redirect("/api/admin/dashboard")
+			return res.redirect('/api/admin/dashboard');
 		}
 		// await worker.updateOne({ $set: { isVerify: false } });
 		await worker.updateOne({
@@ -123,11 +146,10 @@ const verifyRejected = async (req, res) => {
 			$set: { isVerify: false },
 		});
 		// res.status(200).json({ status: 'success', message: 'Worker Verification request is Rejected.' });
-		res.redirect("/api/admin/dashboard")
+		res.redirect('/api/admin/dashboard');
 	} catch (err) {
 		// res.status(500).json({ status: 'fail', message: err.message });
-		res.redirect("/api/admin/login")
-
+		res.redirect('/api/admin/login');
 	}
 };
 
@@ -142,6 +164,45 @@ const renderDashboard = async (req, res) => {
 	}
 };
 
+const renderClients = async (req, res) => {
+	try {
+		const clients = await Client.find({});
+		const tasks = await Task.find({});
+		const taskCount = {};
+		for (let i = 0; i < tasks.length; i++) {
+			if (!taskCount[tasks[i].clientID]) {
+				taskCount[tasks[i].clientID] = 1;
+			} else {
+				taskCount[tasks[i].clientID] += 1;
+			}
+		}
+		for (let i = 0; i < clients.length; i++) {
+			clients[i].tasks = taskCount[clients[i]._id] || 0;
+		}
+		res.render('admin/clients', { clients });
+	} catch (err) {
+		res.render('admin/login', { errMsg: err.message });
+	}
+};
+
+const renderWorkers = async (req, res) => {
+	try {
+		const workers = await Worker.find({});
+		res.render('admin/workers', { workers });
+	} catch (err) {
+		res.render('admin/login', { errMsg: err.message });
+	}
+};
+
+const renderCategories = async (req, res) => {
+	try {
+		const categories = await Category.find({});
+		res.render('admin/category', { categories });
+	} catch (err) {
+		res.render('admin/login', { errMsg: err.message });
+	}
+};
+
 module.exports = {
 	register_post,
 	login_post,
@@ -151,4 +212,9 @@ module.exports = {
 	verifyRejected,
 	addCategory_post,
 	renderDashboard,
+	renderClients,
+	renderWorkers,
+	renderCategories,
+	removeCategory,
+	updateCategory,
 };

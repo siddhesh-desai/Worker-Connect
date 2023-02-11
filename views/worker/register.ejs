@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Worker Registration</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+        rel="shortcut icon" type="image/x-icon" />
+    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+        rel="apple-touch-icon" />
+</head>
+
+<body>
+    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav-bar w-nav">
+        <div class="nav-container w-container">
+            <div class="logo-div">
+                <a href="#" aria-current="page" class="logotext"><b>workerConnect</b></a>
+            </div>
+
+            <nav role="navigation" class="nav-content w-nav-menu">
+                <div class="nav-menu">
+                    <a href="/api/worker/home" class="nav-link w-nav-link">Home</a>
+                    <a href="#" class="nav-link w-nav-link">About Us</a>
+                    <a href="#" class="nav-link w-nav-link">For Clients</a>
+                    <a href="#" class="nav-link w-nav-link">For Workers</a>
+                    <a href="#" class="nav-link w-nav-link">Contact Us</a>
+                </div>
+                
+                <div class="nav-cta-button-container">
+                    <a href="/api/worker/login" class="nav-link cta-button1 w-nav-link">Log In</a>
+                    <a href="/api/worker/register" class="nav-link cta-button w-nav-link">Register</a>
+                </div>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+                    loading="lazy" width="24" alt="" class="menu-icon" />
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="section light-color-gradient wf-section">
+            <div class="container">
+                <div class="w-layout-grid hero-grid">
+                    <img src="/assets/worker.jpg" loading="eager" width="470" alt="" class="hero-illustration" style="position: fixed; margin-left:50%; margin-bottom: 35%;"/>
+                    <form action="/api/worker/register" method="post" enctype="multipart/form-data">
+                        <div class="text-box _500px">
+                            <h1 class="heading h1">Register as a Worker.</h1>
+                            <br />
+                            <br />
+
+                            <label for="Email-2" class="form-label">Email address:</label>
+                            <input type="email" class="text-field no-margin w-input" maxlength="256" name="email"
+                                data-name="Email 2" placeholder="Enter your email" id="Email-2" required />
+                            <br />
+                            <label for="Email-2" class="form-label">Full Name:</label>
+                            <input type="text" class="text-field no-margin w-input" maxlength="256" name="name"
+                                data-name="Email 2" placeholder="Enter your email" id="Email-2" required />
+                            <br />
+                            <label for="Email-2" class="form-label">Mobile Number:</label>
+                            <input type="number" class="text-field no-margin w-input" maxlength="256" name="phone"
+                                data-name="Email 2" placeholder="Mobile number" id="Email-2" required />
+                            <br/>
+                            <label for="Email-2" class="form-label">Highest Qualification:</label>
+                            <input type="text" class="text-field no-margin w-input" maxlength="256" name="highestQualification"
+                                data-name="Email 2" placeholder="Mobile number" id="Email-2" required />
+                            <br/>
+                            <label for="Email-2" class="form-label">Password:</label>
+                            <input type="password" class="text-field no-margin w-input" maxlength="256" name="password"
+                                data-name="Email 2" placeholder="Enter password" id="Email-2" required />
+                            <br />
+
+                            <label for="Email-2" class="form-label">Date of Birth: </label>
+                            <input type="date" class="text-field no-margin w-input" maxlength="256" name="dob"
+                                data-name="Email 2" placeholder="Date of Birth" id="Email-2" required />
+                            <br/>
+
+                            <label for="Email-2" class="form-label">Address: </label>
+                            <input type="text" class="text-field no-margin w-input" maxlength="256" name="address"
+                                data-name="Email 2" placeholder="Google Map Link" id="Email-2" required />
+                            <br/>
+
+                            <label for="Email-2" class="form-label">Short Description about you: </label>
+                            <input type="text" class="text-field no-margin w-input" maxlength="256" name="bio"
+                                data-name="Email 2" placeholder="Introduce yourself" id="Email-2" />
+                            <br/>
+
+                            <label for="Email-2" class="form-label">Government ID Card: </label>
+                            <input type="file" class="text-field no-margin w-input" maxlength="256" name="addharCard"
+                                data-name="Email 2" id="Email-2" required="" style="padding-left:2%;padding-top:2%"/>
+                            <br/>
+
+                            <div class="container2 text-center">
+                                <div class="row">
+                                <span class="col">
+                                    <button type="submit" class="button w-button" style="margin-top: 15px">Register</button>
+                                </span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="col">
+                                    <a class="account-label" href="clientlogin.html">Already have an account?</a>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

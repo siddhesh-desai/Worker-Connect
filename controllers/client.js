@@ -1,9 +1,10 @@
 const Client = require('../models/client');
 const Task = require('../models/task');
 const Worker = require('../models/worker');
+const Category = require("../models/category")
 const jwt = require('jsonwebtoken');
 
-const CLIENT_ID = "63e638b4b1c25109e8b8aff6"
+const CLIENT_ID = '63e638b4b1c25109e8b8aff6';
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
@@ -26,23 +27,17 @@ const register_post = (req, res, next) => {
 		new_client.save(function (err, result) {
 			if (err) {
 				console.log(err);
-				res.status(400).json({ message: err.message, status: 'fail' });
-				// if (err.code == 11000) {
-				//     // res.render("admin_addEmployee", {msg : "Employee already exist with same Email"})
-
-				// }
+				res.render('client/register', { errMsg: err.message });
 			} else {
-				// console.log(result)
-				// res.send(result)
-				// res.redirect("/admin/add")
-				res.status(201).json({ status: 'success', data: result });
+				res.redirect('/api/client/login');
 			}
 		});
 	});
 };
 
 const update_profile_post = async (req, res, next) => {
-	const clientID = req.clientID || CLIENT_ID;
+	// const clientID = req.clientID || CLIENT_ID;
+	const clientID = req.clientID ;
 	var updatedClient = {
 		name: req.body.name,
 		email: req.body.email,
@@ -65,26 +60,30 @@ const login_post = async (req, res) => {
 		const client = await Client.login(email, password);
 		if (client == null) {
 			//   res.render("login",{msg : "Invalid Crediential"})
-			return res.status(400).json({ status: 'fail', message: 'Invalid Crediential' });
+			// return res.status(400).json({ status: 'fail', message: 'Invalid Crediential' });
+			return res.render('client/login', { errMsg: 'Invalid Crediential' });
 		} else {
 			const token = createClientToken(client._id);
 			res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-			res.status(200).json({ data: { client, token }, status: 'success' });
+			// res.status(200).json({ data: { client, token }, status: 'success' });
+			res.redirect("/api/client/home")
 		}
 	} catch (err) {
 		// const errors = handleErrors(err);
-		res.status(400).json({ status: 'fail', message: err.message });
+		// res.status(400).json({ status: 'fail', message: err.message });
+		res.render('client/login', { errMsg: err.message });
 	}
 };
 
 const logout = (req, res) => {
 	res.cookie('jwt', '', { maxAge: 1 });
-	// res.redirect('/login');
-	res.status(200).json({ status: 'success', message: 'Logout Successfully' });
+	// res.status(200).json({ status: 'success', message: 'Logout Successfully' });
+	res.redirect('/api/client/login');
 };
 
 const addTask_post = (req, res, next) => {
-	const clientID = req.clientID || CLIENT_ID;
+	// const clientID = req.clientID || CLIENT_ID;
+	const clientID = req.clientID ;
 	Task.init().then(() => {
 		// safe to create users now.
 		var new_task = new Task({
@@ -95,10 +94,10 @@ const addTask_post = (req, res, next) => {
 		});
 		new_task.save(function (err, result) {
 			if (err) {
-				console.log(err);
-				res.status(400).json({ message: err.message, status: 'fail' });
+				console.log(err.message);
+				res.render("client/login", {errMsg : err.message})
 			} else {
-				res.status(201).json({ status: 'success', data: result });
+				res.redirect("/api/client/home")
 			}
 		});
 	});
@@ -106,7 +105,8 @@ const addTask_post = (req, res, next) => {
 
 //  http://localhost:3000/user?name=Gourav&age=11
 const negotiateTaskPrice = async (req, res) => {
-	const clientID = req.clientID || CLIENT_ID;
+	// const clientID = req.clientID || CLIENT_ID;
+	const clientID = req.clientID ;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
@@ -135,7 +135,8 @@ const negotiateTaskPrice = async (req, res) => {
 };
 
 const acceptTaskPrice = async (req, res) => {
-	const clientID = req.clientID || CLIENT_ID;
+	// const clientID = req.clientID || CLIENT_ID;
+	const clientID = req.clientID ;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
@@ -150,11 +151,8 @@ const acceptTaskPrice = async (req, res) => {
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
 				{ $set: { 'intrestedWorkers.$.isBooked': true } }
-            ),
-            await Task.findOneAndUpdate(
-				{ _id: taskID},
-				{ $set: { 'isBooked': true, 'workerID' : intrestedWorkerID } }
 			),
+			await Task.findOneAndUpdate({ _id: taskID }, { $set: { isBooked: true, workerID: intrestedWorkerID } }),
 			await Worker.findByIdAndUpdate(intrestedWorkerID, {
 				$push: {
 					notification: {
@@ -181,7 +179,8 @@ const acceptTaskPrice = async (req, res) => {
 };
 
 const rejectTaskWorker = async (req, res) => {
-	const clientID = req.clientID || CLIENT_ID;
+	// const clientID = req.clientID || CLIENT_ID;
+	const clientID = req.clientID ;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
@@ -194,7 +193,7 @@ const rejectTaskWorker = async (req, res) => {
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
 				{ $set: { 'intrestedWorkers.$.isRejected': true } }
-            ),
+			),
 			await Worker.findByIdAndUpdate(intrestedWorkerID, {
 				$push: {
 					notification: {
@@ -209,6 +208,31 @@ const rejectTaskWorker = async (req, res) => {
 	}
 };
 
+const renderHome = async (req, res) => {
+	try {
+		let tasks = await Task.find({});
+		for (let i = 0; i < tasks.length; i++){
+			const category = await Category.findById(tasks[i].categoryID)
+			const clientName = await Client.findById(tasks[i].clientID)
+			tasks[i].category = category.name
+			tasks[i].clientName = clientName.name
+		}
+		const allCategory = await Category.find({})
+		res.render('client/home', { tasks, categories : allCategory });
+	} catch (err) {
+		res.render('client/login', { errMsg: err.message });
+	}
+};
+
+const renderMyTasks = async (req, res) => {
+	const clientID = req.clientID;
+	try {
+		const tasks = await Task.find({ clientID })
+		res.render("client/myTask", {tasks})
+	} catch (err) {
+		res.render("client/login", {errMsg : err.message})
+	}
+}
 
 module.exports = {
 	register_post,
@@ -216,7 +240,9 @@ module.exports = {
 	logout,
 	update_profile_post,
 	addTask_post,
-    negotiateTaskPrice,
+	negotiateTaskPrice,
 	acceptTaskPrice,
-	rejectTaskWorker
+	rejectTaskWorker,
+	renderHome,
+	renderMyTasks
 };

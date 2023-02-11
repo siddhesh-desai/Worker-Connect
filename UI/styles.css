@@ -6300,6 +6300,12 @@ figcaption {
     margin-left: 1.7rem;
   }
 
+  .category-section.light-color-gradient{
+    position: relative;
+    background-color: #f5f6f7;
+    background-image: linear-gradient(54deg, rgba(255, 131, 122, 0.25), rgba(255, 131, 122, 0) 28%), linear-gradient(241deg, rgba(239, 152, 207, 0.25), rgba(239, 152, 207, 0) 36%);
+  }
+  
   .catogryAddingBtn{
     text-align: end;
     margin-bottom: 2rem;
@@ -6347,3 +6353,38 @@ figcaption {
     flex-direction: column;
     align-items: flex-start;
 } 
+
+/* Negotaition Window*/
+.checked {
+    color: orange;
+  }
+
+.modal-area-nego{
+    flex-direction: column;
+}
+
+.price-section{
+    gap:2rem ;
+}
+
+.worker-price{
+    /* background: rgba(232, 248, 246, 0.8); */
+    /* box-shadow: 4px 7px 8px rgb(0 0 0 / 24%); */
+    border-radius: 13px;
+    border: 2px solid black;
+    min-width: 250px;
+    min-height: 200px;
+}
+
+.client-price{
+    /* background: rgba(255, 225, 246, 0.8); */
+    /* box-shadow: 4px 7px 8px rgb(0 0 0 / 24%); */
+    border-radius: 13px;
+    border: 2px solid black;
+    min-width: 250px;
+    min-height: 200px;
+}
+
+.btnSection-nego{
+    flex-direction: row;
+}

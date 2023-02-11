@@ -8,7 +8,7 @@
     <title>My Tasks - Client</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
 
     <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
         rel="shortcut icon" type="image/x-icon" />
@@ -27,15 +27,15 @@
 
             <nav role="navigation" class="nav-content w-nav-menu">
                 <div class="nav-menu">
-                    <a href="worker_home.html" class="nav-link w-nav-link" >Home</a>
-                    <a href="#" class="nav-link w-nav-link" id="addTask1">My Clients</a>
-                    <a href="worker_myworks.html" class="nav-link w-nav-link" style="color:#710101;"><b>My Works</b></a>
-                    <a href="worker_notification.html" class="nav-link w-nav-link">Notifications</a>
-                    <a href="workerProfile.html" class="nav-link w-nav-link">My Profile</a>
+                    <a href="/api/client/home" class="nav-link w-nav-link"><b>Home</b></a>
+                    <a href="#" class="nav-link w-nav-link" id="addTask1">Add Task</a>
+                    <a href="api/client/mytask" class="nav-link w-nav-link"  style="color:#710101;"><b>My Tasks</b></a>
+                    <a href="client_notification.html" class="nav-link w-nav-link">Notifications</a>
+                    <a href="clientProfile.html" class="nav-link w-nav-link">My Profile</a>
                 </div>
                 
                 <div class="nav-cta-button-container">
-                    <a href="#" class="nav-link cta-button1 w-nav-link">Log Out</a>
+                    <a href="/api/client/logout" class="nav-link cta-button1 w-nav-link">Log Out</a>
                 </div>
             </nav>
             <div class="menu-button w-nav-button">
@@ -54,6 +54,7 @@
                         <div class="row">
                             <div class="grid">
                                 <h2 class="heading h2" style="margin-bottom:30px; text-align: start;">Ongoing Tasks</h2>
+                                <button class="nav-link cta-button1 w-nav-link" style="width:fit-content; height:fit-content; margin-left: 65%;" id="addTask">Add a Task!</button>
                             </div>
                             <div class="grid" style="width: 100%; padding:0%">
                               
