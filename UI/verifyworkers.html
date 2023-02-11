@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Home - Admin</title>
+    <title>Verify Workers - Admin</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
@@ -27,8 +27,8 @@
 
             <nav role="navigation" class="nav-content w-nav-menu">
                 <div class="nav-menu">
-                    <a href="admin_home.html" class="nav-link w-nav-link" style="color:#710101;"><b>Home</b></a>
-                    <a href="verifyworkers.html" class="nav-link w-nav-link">Verify Workers</a>
+                    <a href="admin_home.html" class="nav-link w-nav-link">Home</a>
+                    <a href="verifyworkers.html" class="nav-link w-nav-link" style="color:#710101;"><b>Verify Workers</b></a>
                     <a href="#" class="nav-link w-nav-link">Categories</a>
                     <a href="admin_pairings.html" class="nav-link w-nav-link">Pairings</a>
                     <a href="admin_clients.html" class="nav-link w-nav-link">Clients</a>
@@ -47,31 +47,10 @@
     </div>
 
     <div class="page-wrapper">
-        <div class="section black-gradient  wf-section">
-            <div class="container">
-                <div class="row">
-                    <div class="grid">
-                      <div class="card" style="width: 90%;">
-                        <div class="card-body" >
-                          <p class="card-text" style="color: #000; font-size: 70px; font-weight: bold;text-align: center;margin-bottom: 0px;">500</p>
-                          <h5 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: center">Number of Workers</h5>
-                        </div>
-                      </div>
-                      <div class="card" style="width: 90%;">
-                        <div class="card-body" >
-                          <p class="card-text" style="color: #000; font-size: 70px; font-weight: bold;text-align: center;margin-bottom: 0px;">750</p>
-                          <h5 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: center">Number of Clients</h5>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section light-color-gradient  wf-section" style="padding-top:3%;">
+        <div class="section light-color-gradient  wf-section" style="padding-top:3%">
             <div class="container w-container">
                 <div class="text-box _1200px center-align " >
-                    <h2 class="heading h2">Pending Worker Requests</h2>
+                    <h2 class="heading h2">Worker Requests</h2>
                     
                     <table class="styled-table">
                         <thead>
@@ -89,7 +68,7 @@
                                 <td>dom@gmail.com</td>
                                 <td>+91 7558612763</td>
                                 <td><button class="table-view-btn" id="viewBtn">View</button></td>
-                                <td> 
+                                <td>
                                     <button class="table-accept-btn">Accept</button>
                                     <button class="table-reject-btn">Reject</button>
                                 </td>
@@ -98,7 +77,7 @@
                                 <td class="t-name">Raju Sharma</td>
                                 <td>dom@gmail.com</td>
                                 <td>+91 7558612763</td>
-                                <td><button class="table-view-btn"id="viewBtn">View</button></td>
+                                <td><button class="table-view-btn">View</button></td>
                                 <td>
                                     <button class="table-accept-btn">Accept</button>
                                     <button class="table-reject-btn">Reject</button>
@@ -108,7 +87,7 @@
                                 <td class="t-name">Dom David</td>
                                 <td>dom@gmail.com</td>
                                 <td>+91 7558612763</td>
-                                <td><button class="table-view-btn" id="viewBtn">View</button></td>
+                                <td><button class="table-view-btn">View</button></td>
                                 <td>
                                     <button class="table-accept-btn">Accept</button>
                                     <button class="table-reject-btn">Reject</button>
@@ -118,7 +97,7 @@
                                 <td class="t-name">Dom David</td>
                                 <td>dom@gmail.com</td>
                                 <td>+91 7558612763</td>
-                                <td><button class="table-view-btn" id="viewBtn">View</button></td>
+                                <td><button class="table-view-btn">View</button></td>
                                 <td>
                                     <button class="table-accept-btn">Accept</button>
                                     <button class="table-reject-btn">Reject</button>
@@ -132,23 +111,16 @@
         </div>
 
         <div id="myModal" class="modal">
-            <div class="modal-content " style="padding-left: 50px; padding-top: 30px;">
-                <div class="closing-btn">  
-                    <span class="close" id="closeBtn">&times;</span>
-                </div>
-                <div class="contents-modall flex"> 
-                    <div class="flex-left-content">
-                        <img src="Assets/aadharCardUpada.jpg" alt="">
-                    </div>
-                    <div class="flex-right-content flex">  
-                        <p style="font-weight: bold;">Name: Dom David</p>
-                        <p style="font-weight: bold;">Email: dom@gmail.com</p>
-                        <p style="font-weight: bold;">Mobile: +91 7558612763</p>
-                        <p style="font-weight: bold;">Categories: Carpentry</p>
-                    </div>
-                </div>
+
+            <!-- Modal content -->
+            <div class="modal-content" style="padding-left: 50px; padding-top: 30px;">
+              <span class="close" id="closeBtn">&times;</span>
+              <p style="font-weight: bold;">Name: Dom David</p>
+              <p style="font-weight: bold;">Email: dom@gmail.com</p>
+              <p style="font-weight: bold;">Mobile: +91 7558612763</p>
+              <p style="font-weight: bold;">Categories: Carpentry</p>
             </div>
-      
+          
         </div>
     </div>
 
@@ -179,7 +151,6 @@
         }
         }
     </script>
-    
 </body>
 
 </html>
