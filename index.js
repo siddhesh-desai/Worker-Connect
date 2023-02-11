@@ -7,7 +7,8 @@ const multer = require('multer');
 const path = require('path');
 const workerController = require('./controllers/worker');
 const clientController = require('./controllers/client');
-const adminRoutes = require("./routes/admin")
+const adminController = require('./controllers/admin');
+const adminRoutes = require('./routes/admin');
 const workerRoutes = require('./routes/worker');
 const clientRoutes = require('./routes/client');
 const { requireWorkerAuth, requireClientAuth, requireAdminAuth } = require('./middleware/auth');
@@ -53,6 +54,12 @@ app.get('/', (req, res) => {
 	res.send('Hello Word');
 });
 
+// Public Route for Admin
+app.post('/api/admin/login', adminController.login_post);
+app.get('/api/admin/login', (req, res) => {
+	res.render('admin/login', { errMsg: '' });
+});
+
 // Worker Public Routes
 app.post('/api/worker/register', upload.single('addharCard'), workerController.register_post);
 app.post('/api/worker/login', workerController.login_post);
@@ -69,4 +76,4 @@ app.use('/api/worker/', workerRoutes);
 app.use('/api/client/', clientRoutes);
 // Admin Protected Routes
 // app.use("/api/admin/", requireAdminAuth, adminRoutes)
-app.use("/api/admin/", adminRoutes)
+app.use('/api/admin/', requireAdminAuth, adminRoutes);
