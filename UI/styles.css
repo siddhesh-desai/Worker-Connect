@@ -6111,8 +6111,18 @@ figcaption {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.card {
-    background-color: white;
+.card1 {
+    background-color: rgba(113, 1, 1, 0.69);
+    width: fit-content;
+    border: #000;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: #000;
+
+}
+
+.card2 {
+    background-color: rgba(160, 50, 50, 0.33);
     width: fit-content;
     border: #000;
     border-radius: 5px;
