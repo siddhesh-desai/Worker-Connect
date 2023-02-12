@@ -48,23 +48,24 @@ const register_post = (req, res, next) => {
 
 const update_profile_post = async (req, res, next) => {
 	// const workerID = req.workerID || WORKER_ID;
+	const { name, phone, highestQualification, address, bio} = req.body
 	const workerID = req.workerID;
-	var updatedWorker = {
-		name: req.body.name,
-		email: req.body.email,
-		phone: req.body.phone,
-		password: req.body.password,
-		dob: new Date(req.body.dob),
-		highestQualification: req.body.highestQualification,
-		address: req.body.address,
-		bio: req.body.bio,
-	};
+	// var updatedWorker = {
+	// 	name: req.body.name,
+	// 	phone: req.body.phone,
+	// 	highestQualification: req.body.highestQualification,
+	// 	address: req.body.address,
+	// 	bio: req.body.bio,
+	// };
 
 	try {
-		const result = await Worker.findByIdAndUpdate(workerID, updatedWorker, { new: true });
-		res.status(200).json({ status: 'success', data: result });
+		const result = await Worker.findByIdAndUpdate(workerID, { $set: {name, phone, highestQualification, address, bio} }, { new: true });
+		// res.status(200).json({ status: 'success', data: result });
+		res.redirect("/api/worker/profile")
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		// res.status(500).json({ status: 'fail', message: err.message });
+		console.log(err)
+		res.render("worker/login", {errMsg : err.message})
 	}
 };
 
@@ -247,9 +248,33 @@ const renderTaskWithID = async (req, res) => {
 	}
 };
 
+const renderNotification = async (req, res) => {
+	const workerID = req.workerID
+	try {
+		let notifications = await Worker.findById(workerID)
+		notifications = notifications.notification
+		notifications = notifications.sort((a, b) => b.date - a.date )
+		res.render("worker/notification", {notifications})
+	} catch (err) {
+		console.log(err)
+		res.render("worker/login", {errMsg : err.message})
+	}
+}
 
+const renderProfile = async (req, res) => {
+	const workerID = req.workerID
+	try {
+		const worker = await Worker.findById(workerID)
+		res.render("worker/profile", {worker})
+	} catch (err) {
+		console.log(err)
+		res.render("worker/login", {errMsg : err.message})
+	}
+}
 
 module.exports = {
+	renderProfile,
+	renderNotification,
 	renderMyWorks,
 	register_post,
 	login_post,

@@ -15,6 +15,8 @@ router.get('/logout', clientController.logout);
 router.get('/home', clientController.renderHome);
 router.get('/mytask', clientController.renderMyTasks);
 router.get('/task/:id', clientController.renderTaskWithID);
+router.get('/notification', clientController.renderNotification);
+router.get('/profile', clientController.renderProfile);
 
 
 module.exports = router;

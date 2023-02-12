@@ -37,20 +37,23 @@ const register_post = (req, res, next) => {
 
 const update_profile_post = async (req, res, next) => {
 	// const clientID = req.clientID || CLIENT_ID;
+	const { name, phone, address} = req.body
+
 	const clientID = req.clientID;
-	var updatedClient = {
-		name: req.body.name,
-		email: req.body.email,
-		phone: req.body.phone,
-		password: req.body.password,
-		address: req.body.address,
-	};
+	// var updatedClient = {
+	// 	name: req.body.name,
+	// 	phone: req.body.phone,
+	// 	address: req.body.address,
+	// };
 
 	try {
-		const result = await Client.findByIdAndUpdate(clientID, updatedClient, { new: true });
-		res.status(200).json({ status: 'success', data: result });
+		const result = await Client.findByIdAndUpdate(clientID,  { $set: {name, phone, address} }, { new: true });
+		// res.status(200).json({ status: 'success', data: result });
+		res.redirect("/api/client/profile")
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		// res.status(500).json({ status: 'fail', message: err.message });
+		console.log(err)
+		res.render("client/login", {errMsg : err.message})
 	}
 };
 
@@ -114,12 +117,17 @@ const negotiateTaskPrice = async (req, res) => {
 		const client = await Client.findById(clientID);
 		if (task === null || !task.clientID.equals(clientID)) {
 			// return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
-			return res.render("client/login", {errMsg : 'Access Denied(not Your Task)'})
+			return res.render('client/login', { errMsg: 'Access Denied(not Your Task)' });
 		}
 		await Promise.all([
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
-				{ $set: { 'intrestedWorkers.$.clientPrice.price': req.body.price, 'intrestedWorkers.$.clientPrice.time': Date.now() } }
+				{
+					$set: {
+						'intrestedWorkers.$.clientPrice.price': req.body.price,
+						'intrestedWorkers.$.clientPrice.time': Date.now(),
+					},
+				}
 			),
 			await Worker.findByIdAndUpdate(intrestedWorkerID, {
 				$push: {
@@ -130,10 +138,23 @@ const negotiateTaskPrice = async (req, res) => {
 			}),
 		]);
 		// res.status(200).json({ status: 'success', message: 'Client Price added' });
-		res.redirect("/api/client/task/"+taskID)
+		res.redirect('/api/client/task/' + taskID);
 	} catch (err) {
 		// res.status(500).json({ status: 'fail', message: err.message });
-		res.render("client/login", {errMsg : err.message})
+		res.render('client/login', { errMsg: err.message });
+	}
+};
+
+const renderNotification = async (req, res) => {
+	const clientID = req.clientID;
+	try {
+		let notifications = await Client.findById(clientID);
+		notifications = notifications.notification;
+		notifications = notifications.sort((a, b) => b.date - a.date);
+		res.render('client/notifications', { notifications });
+	} catch (err) {
+		console.log(err);
+		res.render('client/login', { errMsg: err.message });
 	}
 };
 
@@ -146,7 +167,8 @@ const acceptTaskPrice = async (req, res) => {
 		const task = await Task.findById(taskID);
 		const client = await Client.findById(clientID);
 		if (task === null || !task.clientID.equals(clientID)) {
-			return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			// return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			return res.render('client/login', { errMsg: 'Access Denied(not Your Task)' });
 		}
 		const notSelectedWokerIDs = task.intrestedWorkers.filter((worker) => !worker.workerID.equals(intrestedWorkerID));
 		const price = task.intrestedWorkers.find((worker) => worker.workerID.equals(intrestedWorkerID)).workerPrice.price;
@@ -175,9 +197,12 @@ const acceptTaskPrice = async (req, res) => {
 				})
 			)
 		);
-		res.status(200).json({ status: 'success', message: 'Client Booked the Task' });
+		// res.status(200).json({ status: 'success', message: 'Client Booked the Task' });
+		res.redirect(`/api/client/task/${taskID}`);
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		console.log(err);
+		// res.status(500).json({ status: 'fail', message: err.message });
+		res.render('client/login', { errMsg: err.message });
 	}
 };
 
@@ -190,7 +215,8 @@ const rejectTaskWorker = async (req, res) => {
 		const task = await Task.findById(taskID);
 		const client = await Client.findById(clientID);
 		if (task === null || !task.clientID.equals(clientID)) {
-			return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			// return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			return res.render('client/login', { errMsg: 'Access Denied(not Your Task)' });
 		}
 		await Promise.all([
 			await Task.findOneAndUpdate(
@@ -205,9 +231,12 @@ const rejectTaskWorker = async (req, res) => {
 				},
 			}),
 		]);
-		res.status(200).json({ status: 'success', message: 'Client Rejected the Worker Request' });
+		// res.status(200).json({ status: 'success', message: 'Client Rejected the Worker Request' });
+		res.redirect(`/api/client/task/${taskID}`);
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		// res.status(500).json({ status: 'fail', message: err.message });
+		console.log(err);
+		res.render('client/login', { errMsg: err.message });
 	}
 };
 
@@ -237,38 +266,51 @@ const renderMyTasks = async (req, res) => {
 			// console.log(category.name);
 			tasks[i].category = category.name;
 		}
-		const allCategory = await Category.find({})
-		res.render('client/myTask', { tasks, categories : allCategory });
+		const allCategory = await Category.find({});
+		res.render('client/myTask', { tasks, categories: allCategory });
 	} catch (err) {
 		res.render('client/login', { errMsg: err.message });
 	}
 };
 
 const renderTaskWithID = async (req, res) => {
-	const clientID = req.clientID
-	const taskID = req.params.id
+	const clientID = req.clientID;
+	const taskID = req.params.id;
 	try {
-		const task = await Task.findById(taskID)
+		const task = await Task.findById(taskID);
 		if (!task || !task.clientID.equals(clientID)) {
-			return res.render("client/login", {errMsg : "Task not Belongs to Worker"})
+			return res.render('client/login', { errMsg: 'Task not Belongs to Worker' });
 		}
-		for (let i = 0; i < task.intrestedWorkers.length; i++){
-			const worker = await Worker.findById(task.intrestedWorkers[i].workerID)
+		for (let i = 0; i < task.intrestedWorkers.length; i++) {
+			const worker = await Worker.findById(task.intrestedWorkers[i].workerID);
 			task.intrestedWorkers[i].workerName = worker.name;
 			let rating = 0;
-			for (let j = 0; j < worker.reviews.length; j++){
-				rating += worker.reviews[i].rating
+			for (let j = 0; j < worker.reviews.length; j++) {
+				rating += worker.reviews[i].rating;
 			}
-			rating = rating / (5 * worker.reviews.length)
-			task.intrestedWorkers[i].workerRating = rating
+			rating = rating / (5 * worker.reviews.length);
+			task.intrestedWorkers[i].workerRating = rating;
 		}
-		res.render("client/taskNego", {task})
+		res.render('client/taskNego', { task });
 	} catch (err) {
-		res.render("client/login", {errMsg : err.message})	
+		res.render('client/login', { errMsg: err.message });
 	}
-}
+};
+
+const renderProfile = async (req, res) => {
+	const clientID = req.clientID;
+	try {
+		const client = await Client.findById(clientID);
+		res.render('client/profile', { client });
+	} catch (err) {
+		console.log(err);
+		res.render('client/login', { errMsg: err.message });
+	}
+};
 
 module.exports = {
+	renderProfile,
+	renderNotification,
 	renderTaskWithID,
 	register_post,
 	login_post,

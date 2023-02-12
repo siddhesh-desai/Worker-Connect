@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav-bar w-nav">
+        <div class="nav-container w-container">
+            <div class="logo-div">
+                <a href="/api/client/home" aria-current="page" class="logotext" style="margin-right: 350px;"><b>workerConnect</b></a>
+            </div>
+
+            <nav role="navigation" class="nav-content w-nav-menu">
+                <div class="nav-menu">
+                    <a href="/api/client/home" class="nav-link w-nav-link" style="color:#710101;"><b>Home</b></a>
+                    <a href="#" class="nav-link w-nav-link" id="addTask1">Add Task</a>
+                    <a href="/api/client/mytask" class="nav-link w-nav-link">My Tasks</a>
+                    <a href="/api/client/notification" class="nav-link w-nav-link">Notifications</a>
+                    <a href="/api/client/profile" class="nav-link w-nav-link" style="color:#710101;"><b>My Profile</b></a>
+                </div>
+                
+                <div class="nav-cta-button-container">
+                    <a href="#" class="nav-link cta-button1 w-nav-link">Log Out</a>
+                </div>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+                    loading="lazy" width="24" alt="" class="menu-icon" />
+            </div>
+        </div>
+    </div>
+
+    <section class="myProfile section light-color-gradient" style="margin-top: 2rem">
+        <div
+            class="flex"
+            style="border: none; border-radius: 5px; display: flex; justify-content: space-evenly; box-shadow: none; "
+        >
+            <img src="/Assets/profile.png" alt="" style="max-width: 31%; border-radius: 5px" />
+
+            <div class="profile-area-right flex">
+                <p style="font-size: 2rem"><%=client.name%></p>
+                <p>+91-<%=client.phone%></p>
+                <p><%=client.email%></p>
+                <p><b> Address</b>: <a href="<%=client.address%>" target="_blank">LINK</a></p>
+
+                <!-- <button class="nav-link cta-button1 w-nav-link" style="width:fit-content; height:fit-content; margin-left: 65%;" >Edit Profile</button> -->
+                <button class="table-accept-btn btn-save1" style="margin-block: 1rem; background-color: black" id="addTask">
+                    Edit Profile
+                </button>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <form action="/api/client/update" method="post">
+                <div
+                    class="modal-content"
+                    style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px"
+                >
+                    <span class="close" id="closeBtn">&times;</span>
+                    <h1 style="text-align: center; font-size: 200%; font-weight: bolder">Edit Profile</h1>
+                    <label for="Email-2" class="form-label">Name:</label>
+                    <input
+                        type="text"
+                        class="text-field no-margin w-input"
+                        value="<%=client.name%>"
+                        maxlength="256"
+                        name="name"
+                        data-name="Email 2"
+                        placeholder="Enter Name"
+                        id="Email-2"
+                        required
+                    />
+                    <br />
+                    <label for="Email-2" class="form-label">Mobile No :</label>
+                    <input
+                        type="text"
+                        class="text-field no-margin w-input"
+                        value="<%=client.phone%>"
+                        maxlength="256"
+                        name="phone"
+                        data-name="Email 2"
+                        placeholder="Enter Mobile No"
+                        id="Email-2"
+                        required
+                    />
+                    <br />
+                    <label for="Email-2" class="form-label">Address:</label>
+                    <input
+                        type="text"
+                        class="text-field no-margin w-input"
+                        value="<%=client.address%>"
+                        maxlength="256"
+                        name="address"
+                        data-name="Email 2"
+                        placeholder="Your Address"
+                        id="Email-2"
+                        required
+                    />
+                    <br />
+                    
+                    <br />
+                    <br />
+                    <!-- <button class="nav-link cta-button1 w-nav-link" style="width: 100%; text-align: center;">A</button> -->
+                    <button class="table-accept-btn btn-save1" style="margin-block: 1rem; background-color: black">Save</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById('addTask');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('btn-save1')[1];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = 'block';
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        // span.onclick = function() {
+        //     modal.style.display = "none";
+        // }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
