@@ -17,5 +17,6 @@ router.get("/dashboard", adminController.renderDashboard)
 router.get("/clients", adminController.renderClients)
 router.get("/workers", adminController.renderWorkers)
 router.get("/categories", adminController.renderCategories)
+router.get("/paring", adminController.renderPairing)
 
 module.exports = router;

@@ -172,6 +172,7 @@ const acceptTaskPrice = async (req, res) => {
 		}
 		const notSelectedWokerIDs = task.intrestedWorkers.filter((worker) => !worker.workerID.equals(intrestedWorkerID));
 		const price = task.intrestedWorkers.find((worker) => worker.workerID.equals(intrestedWorkerID)).workerPrice.price;
+		const worker = await Worker.findById(intrestedWorkerID)
 		await Promise.all([
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
@@ -181,7 +182,14 @@ const acceptTaskPrice = async (req, res) => {
 			await Worker.findByIdAndUpdate(intrestedWorkerID, {
 				$push: {
 					notification: {
-						message: `Client ${client.name} has offer you a Task : ${task.title}, for a price of ${price}$`,
+						message: `Client ${client.name} has offer you a Task : ${task.title}, for a price of ${price}$. respective are the name, email, phone number and address of Client. "${client.name}", "${client.email}", "${client.phone}" and "${client.address}"`,
+					},
+				},
+			}),
+			await Client.findByIdAndUpdate(clientID, {
+				$push: {
+					notification: {
+						message: `Hello!, Congratulations you have found your perfect match. Respective are the name, email, phone number and address of Worker whose request you have accepted. "${worker.name}", "${worker.email}", "${worker.phone}" and "${worker.address}" `,
 					},
 				},
 			}),

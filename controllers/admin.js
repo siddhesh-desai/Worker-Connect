@@ -203,7 +203,24 @@ const renderCategories = async (req, res) => {
 	}
 };
 
+const renderPairing = async (req, res) => {
+	try {
+		const tasks = await Task.find({ isBooked: true })
+		for (let i = 0; i < tasks.length; i++){
+			const client = await Client.findById(tasks[i].clientID)
+			const worker = await Worker.findById(tasks[i].workerID)
+			tasks[i].clientName = client.name
+			tasks[i].workerName = worker.name
+		}
+		res.render("admin/paring", {tasks})
+	} catch (err) {
+		console.log(err)
+		res.render("admin/login", {errMsg : err.message})
+	}
+}
+
 module.exports = {
+	renderPairing,
 	register_post,
 	login_post,
 	logout,

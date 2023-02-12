@@ -30,38 +30,37 @@ const taskSchema = new mongoose.Schema({
 			workerID: {
 				type: mongoose.Schema.Types.ObjectId,
 				required: true,
-				unique : true
 			},
 			time: {
 				type: Date,
-				default : Date.now()
+				default: Date.now(),
 			},
 			workerPrice: {
 				type: {
 					price: Number,
 					time: {
 						type: Date,
-						default : Date.now()
-					}
-				}
+						default: Date.now(),
+					},
+				},
 			},
 			clientPrice: {
 				type: {
 					price: Number,
 					time: {
 						type: Date,
-						default : Date.now()
-					}
-				}
-            },
-            isBooked: {
-                type: Boolean,
-                default : false
+						default: Date.now(),
+					},
+				},
+			},
+			isBooked: {
+				type: Boolean,
+				default: false,
 			},
 			isRejected: {
 				type: Boolean,
-                default : false
-			}
+				default: false,
+			},
 		},
 	],
 });
