@@ -31,7 +31,7 @@ const register_post = (req, res, next) => {
 			if (err) {
 				// console.log(err);
 				// res.status(400).json({ message: err.message, status: 'fail' });
-				res.render("worker/login", {errMsg : err.message})
+				res.render('worker/login', { errMsg: err.message });
 				// if (err.code == 11000) {
 				//     // res.render("admin_addEmployee", {msg : "Employee already exist with same Email"})
 
@@ -39,7 +39,7 @@ const register_post = (req, res, next) => {
 			} else {
 				// console.log(result)
 				// res.send(result)
-				res.redirect("/api/worker/login")
+				res.redirect('/api/worker/login');
 				// res.status(201).json({ status: 'success', data: result });
 			}
 		});
@@ -125,24 +125,26 @@ const showTaskInterest = async (req, res) => {
 		const worker = await Worker.findById(workerID);
 		if (!worker || !worker.isVerify) {
 			// return res.status(400).json({ status: 'fail', message: 'Worker not Verified' });
-			return res.render("worker/login", {errMsg : "Worker is not Verified"})
+			return res.render('worker/login', { errMsg: 'Worker is not Verified' });
 		}
 		const task = await Task.findById(taskID);
 		if (!task) {
 			// return res.status(400).json({ status: 'fail', message: 'Task not Found' });
-			return res.render("worker/login", {errMsg : 'Task not Found' })
+			return res.render('worker/login', { errMsg: 'Task not Found' });
 		}
 		const isWorkerPresent = task.intrestedWorkers.find((worker) => worker.workerID.equals(workerID));
 		if (isWorkerPresent) {
 			if (isWorkerPresent.isRejected) {
 				// return res.status(400).json({ status: 'fail', message: 'Worker is Rejected from this Task' });
-				res.render("worker/login", {errMsg : 'Worker is Rejected from this Task'})
+				return res.render('worker/login', { errMsg: 'Worker is Rejected from this Task' });
 			}
 			// return res.status(400).json({ status: 'fail', message: 'Worker alredy Intrested' });
-			res.redirect("/api/worker/home")
+			return res.redirect('/api/worker/home');
 		}
 		await Promise.all([
-			task.updateOne({ $push: { intrestedWorkers: { workerID, workerPrice: Number(req.body.price) } } }),
+			task.updateOne({
+				$push: { intrestedWorkers: { workerID, workerPrice: { price: Number(req.body.price), time: Date.now() } } },
+			}),
 			Client.findByIdAndUpdate(task.clientID, {
 				$push: {
 					notification: {
@@ -152,10 +154,10 @@ const showTaskInterest = async (req, res) => {
 			}),
 		]);
 		// res.status(200).json({ status: 'success', message: 'Worker is added in intrested Queue' });
-		res.redirect("/api/worker/home")
+		return res.redirect('/api/worker/home');
 	} catch (err) {
 		// res.status(500).json({ status: 'fail', message: err.message });
-		res.render("worker/login", {errMsg : err.message})
+		res.render('worker/login', { errMsg: err.message });
 	}
 };
 
@@ -166,16 +168,23 @@ const negotiateTaskPrice = async (req, res) => {
 	try {
 		const worker = await Worker.findById(workerID);
 		if (!worker || !worker.isVerify) {
-			return res.status(400).json({ status: 'fail', message: 'Worker not Verified' });
+			// return res.status(400).json({ status: 'fail', message: 'Worker not Verified' });
+			return res.render('worker/login', { errMsg: 'Worker not Verified' });
 		}
 		const task = await Task.findById(taskID);
 		if (task === null) {
-			return res.status(400).json({ status: 'fail', message: 'Task Not found' });
+			// return res.status(400).json({ status: 'fail', message: 'Task Not found' });
+			return res.render('worker/login', { errMsg: 'Task Not found' });
 		}
 		await Promise.all([
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': workerID },
-				{ $set: { 'intrestedWorkers.$.workerPrice': req.body.price } }
+				{
+					$set: {
+						'intrestedWorkers.$.workerPrice.price': req.body.price,
+						'intrestedWorkers.$.workerPrice.time': Date.now(),
+					},
+				}
 			),
 			await Client.findByIdAndUpdate(task.clientID, {
 				$push: {
@@ -185,16 +194,19 @@ const negotiateTaskPrice = async (req, res) => {
 				},
 			}),
 		]);
-		res.status(200).json({ status: 'success', message: 'Worker Negotiating Price added' });
+		// res.status(200).json({ status: 'success', message: 'Worker Negotiating Price added' });
+		res.redirect(`/api/worker/task/${taskID}`);
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		console.log(err);
+		// res.status(500).json({ status: 'fail', message: err.message });
+		res.render('worker/login', { errMsg: err.message });
 	}
 };
 
 const renderHome = async (req, res) => {
 	const workerID = req.workerID;
 	try {
-		const worker = await Worker.findById(workerID)
+		const worker = await Worker.findById(workerID);
 		let tasks = await Task.find({});
 		for (let i = 0; i < tasks.length; i++) {
 			const category = await Category.findById(tasks[i].categoryID);
@@ -203,13 +215,42 @@ const renderHome = async (req, res) => {
 			tasks[i].clientName = clientName.name;
 		}
 		const allCategory = await Category.find({});
-		res.render('worker/home', { tasks, categories: allCategory, isVerify : worker.isVerify });
+		res.render('worker/home', { tasks, categories: allCategory, isVerify: worker.isVerify });
 	} catch (err) {
 		res.render('worker/login', { errMsg: err.message });
 	}
 };
 
+const renderMyWorks = async (req, res) => {
+	const workerID = req.workerID;
+	try {
+		const tasks = await Task.find({ 'intrestedWorkers.workerID': workerID });
+		// console.log(tasks);
+		for (let i = 0; i < tasks.length; i++) {
+			const category = await Category.findById(tasks[i].categoryID);
+			tasks[i].category = category.name;
+		}
+		res.render('worker/myWork', { tasks, workerID });
+	} catch (err) {
+		res.render('worker/login', { errMsg: err.message });
+	}
+};
+
+const renderTaskWithID = async (req, res) => {
+	const taskID = req.params.id;
+	const workerID = req.workerID;
+	try {
+		const task = await Task.findById(taskID);
+		res.render('worker/taskNego', { task, workerID });
+	} catch (err) {
+		res.render('client/login', { errMsg: err.message });
+	}
+};
+
+
+
 module.exports = {
+	renderMyWorks,
 	register_post,
 	login_post,
 	logout,
@@ -218,4 +259,5 @@ module.exports = {
 	showTaskInterest,
 	negotiateTaskPrice,
 	renderHome,
+	renderTaskWithID,
 };

@@ -1,211 +1,327 @@
 <!DOCTYPE html>
 
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>My Tasks - Client</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="/styles.css" rel="stylesheet" type="text/css" />
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>My Tasks - Client</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/styles.css" rel="stylesheet" type="text/css" />
+		<link
+			href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
+			rel="shortcut icon"
+			type="image/x-icon"
+		/>
+		<link
+			href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
+			rel="apple-touch-icon"
+		/>
+	</head>
 
-    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad1a8cf6a4c26b3cb5e_Faivcon%2032.svg"
-        rel="shortcut icon" type="image/x-icon" />
-    <link href="https://assets.website-files.com/62aee78456e4207786ac4d18/62b0fad95898ce119a80c68e_Faivcon%20256.svg"
-        rel="apple-touch-icon" />
+	<body>
+		<div
+			data-collapse="small"
+			data-animation="default"
+			data-duration="400"
+			data-easing="ease"
+			data-easing2="ease"
+			role="banner"
+			class="nav-bar w-nav"
+		>
+			<div class="nav-container w-container">
+				<div class="logo-div">
+					<a href="#" aria-current="page" class="logotext" style="margin-right: 350px"><b>workerConnect</b></a>
+				</div>
 
-</head>
+				<nav role="navigation" class="nav-content w-nav-menu">
+					<div class="nav-menu">
+						<a href="/api/client/home" class="nav-link w-nav-link"><b>Home</b></a>
+						<a href="#" class="nav-link w-nav-link" id="addTask1">Add Task</a>
+						<a href="/api/client/mytask" class="nav-link w-nav-link" style="color: #710101"><b>My Tasks</b></a>
+						<a href="client_notification.html" class="nav-link w-nav-link">Notifications</a>
+						<a href="clientProfile.html" class="nav-link w-nav-link">My Profile</a>
+					</div>
 
-<body>
-    <div data-collapse="small" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
-        role="banner" class="nav-bar w-nav">
-        <div class="nav-container w-container">
-            <div class="logo-div">
-                <a href="#" aria-current="page" class="logotext" style="margin-right: 350px;"><b>workerConnect</b></a>
-            </div>
+					<div class="nav-cta-button-container">
+						<a href="/api/client/logout" class="nav-link cta-button1 w-nav-link">Log Out</a>
+					</div>
+				</nav>
+				<div class="menu-button w-nav-button">
+					<img
+						src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
+						loading="lazy"
+						width="24"
+						alt=""
+						class="menu-icon"
+					/>
+				</div>
+			</div>
+		</div>
 
-            <nav role="navigation" class="nav-content w-nav-menu">
-                <div class="nav-menu">
-                    <a href="/api/client/home" class="nav-link w-nav-link"><b>Home</b></a>
-                    <a href="#" class="nav-link w-nav-link" id="addTask1">Add Task</a>
-                    <a href="api/client/mytask" class="nav-link w-nav-link"  style="color:#710101;"><b>My Tasks</b></a>
-                    <a href="client_notification.html" class="nav-link w-nav-link">Notifications</a>
-                    <a href="clientProfile.html" class="nav-link w-nav-link">My Profile</a>
-                </div>
-                
-                <div class="nav-cta-button-container">
-                    <a href="/api/client/logout" class="nav-link cta-button1 w-nav-link">Log Out</a>
-                </div>
-            </nav>
-            <div class="menu-button w-nav-button">
-                <img src="https://assets.website-files.com/62aee78456e4207786ac4d18/62aee78456e4200f2eac4d49_Menu%20Icon.svg"
-                    loading="lazy" width="24" alt="" class="menu-icon" />
-            </div>
-        </div>
-    </div>
+		<div class="page-wrapper">
+			<div class="section light-color-gradient wf-section" style="padding-top: 3%; width: 100%">
+				<div class="container w-container" style="width: 100%; padding: 0px">
+					<div class="text-box _1500px center-align">
+						<div class="container" style="width: 100%">
+							<div class="row">
+								<div class="grid">
+									<h2 class="heading h2" style="margin-bottom: 30px; text-align: start">Ongoing Tasks</h2>
+									<button
+										class="nav-link cta-button1 w-nav-link"
+										style="width: fit-content; height: fit-content; margin-left: 65%"
+										id="addTask"
+									>
+										Add a Task!
+									</button>
+								</div>
+								<div class="grid" style="width: 100%; padding: 0%">
+									<% for(let i=0; i<tasks.length; i++) {%>
+                                        <% if(tasks[i].isBooked === false) {%>
+                                            <div class="card" style="width: 95%; margin: 0px; padding-left: 5%">
+                                                <div class="card-body">
+                                                    <p
+                                                        class="card-text"
+                                                        style="color: #000; font-size: 200%; font-weight: bold; text-align: start; margin-bottom: 0px"
+                                                    >
+                                                        <%=tasks[i].title%>
+                                                    </p>
+                                                    <h1
+                                                        class="card-title"
+                                                        style="
+                                                            color: #710101;
+                                                            font-size: larger;
+                                                            font-weight: bold;
+                                                            margin-top: 0%;
+                                                            text-align: start;
+                                                            margin-top: 1%;
+                                                            margin-bottom: 0%;
+                                                        "
+                                                    >
+                                                        Category: <%=tasks[i].category%>
+                                                    </h1>
+                                                    <h1
+                                                        class="card-title"
+                                                        style="
+                                                            color: #616161;
+                                                            font-size: medium;
+                                                            font-weight: bold;
+                                                            text-align: start;
+                                                            margin-top: 2%;
+                                                            margin-bottom: 0%;
+                                                        "
+                                                    >
+                                                        Date Published: <%= tasks[i].createdAt.getDate() %>/<%= tasks[i].createdAt.getMonth() + 1 %>/<%= tasks[i].createdAt.getFullYear() %>
+                                                    </h1>
+                                                    <h1
+                                                        class="card-title"
+                                                        style="
+                                                            color: #a33434;
+                                                            font-size: medium;
+                                                            font-weight: bold;
+                                                            text-align: end;
+                                                            margin-top: 1%;
+                                                            margin-bottom: 0%;
+                                                        "
+                                                    >
+                                                    <%= tasks[i].intrestedWorkers.length %> Workers have applied!
+                                                    </h1>
+                                                    <div class="grid">
+                                                        <button class="nav-link cta-button1 w-nav-link" style="margin-top: 5%; text-align: center">
+                                                            <a style="color: white; text-decoration: none;" href="/api/client/task/<%=tasks[i]._id%>">View Details</a>
+                                                        </button>
+                                                        <button
+                                                            class="nav-link cta-button1 w-nav-link"
+                                                            style="margin-top: 5%; text-align: center; background-color: black"
+                                                        >
+                                                            Mark as Completed!
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>                        
+                                       <% } %>
+                                    <% } %>
+									
+								</div>
+							</div>
+						</div>
+					</div>
 
-    <div class="page-wrapper">
+					<div class="text-box _1500px center-align" style="margin-top: 5%">
+						<div class="container" style="width: 100%">
+							<div class="row">
+								<div class="grid">
+									<h2 class="heading h2" style="margin-bottom: 30px; text-align: start">Previous Tasks</h2>
+								</div>
+								<div class="grid" style="width: 100%; padding: 0%">
+                                    <% for(let i=0; i<tasks.length; i++) {%>
+                                        <% if(tasks[i].isBooked === true) {%>
+									<div class="card" style="width: 95%; margin: 0px; padding-left: 5%">
+										<div class="card-body">
+											<p
+												class="card-text"
+												style="color: #000; font-size: 200%; font-weight: bold; text-align: start; margin-bottom: 0px"
+											>
+												<%=tasks[i].title%>
+											</p>
+											<h1
+												class="card-title"
+												style="
+													color: #710101;
+													font-size: larger;
+													font-weight: bold;
+													margin-top: 0%;
+													text-align: start;
+													margin-top: 1%;
+													margin-bottom: 0%;
+												"
+											>
+												Category: <%=tasks[i].category%>
+											</h1>
+											<h1
+												class="card-title"
+												style="
+													color: #616161;
+													font-size: medium;
+													font-weight: bold;
+													text-align: start;
+													margin-top: 2%;
+													margin-bottom: 0%;
+												"
+											>
+												Date Published: <%= tasks[i].createdAt.getDate() %>/<%= tasks[i].createdAt.getMonth() + 1 %>/<%= tasks[i].createdAt.getFullYear() %>
+											</h1>
+											<h1
+												class="card-title"
+												style="
+													color: #a33434;
+													font-size: medium;
+													font-weight: bold;
+													text-align: end;
+													margin-top: 1%;
+													margin-bottom: 0%;
+												"
+											>
+                                            <%= tasks[i].intrestedWorkers.length %> Workers had applied!
+											</h1>
+										</div>
+									</div>
+									<% } %>
+                                    <% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-        <div class="section light-color-gradient  wf-section" style="padding-top:3%; width: 100%;">
-            <div class="container w-container" style="width: 100%; padding: 0px;">
-                <div class="text-box _1500px center-align " >
-                    <div class="container" style="width: 100%;">
-                        <div class="row">
-                            <div class="grid">
-                                <h2 class="heading h2" style="margin-bottom:30px; text-align: start;">Ongoing Tasks</h2>
-                                <button class="nav-link cta-button1 w-nav-link" style="width:fit-content; height:fit-content; margin-left: 65%;" id="addTask">Add a Task!</button>
-                            </div>
-                            <div class="grid" style="width: 100%; padding:0%">
-                              
-                              <div class="card" style="width: 95%; margin:0px; padding-left: 5%;">
-                                <div class="card-body" >
-                                  <p class="card-text" style="color: #000; font-size: 200%; font-weight: bold;text-align: start;margin-bottom: 0px;">Tap Leakage in Bathroom</p>
-                                  <h1 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: start; margin-top: 1%; margin-bottom: 0%;">Category: Plumbing</h1>
-                                  <h1 class="card-title" style="color: #616161; font-size: medium; font-weight: bold;text-align: start;margin-top: 2%;margin-bottom: 0%;">Date Published: 11 February 2023</h1>
-                                  <h1 class="card-title" style="color: #a33434; font-size: medium; font-weight: bold;text-align: end;margin-top: 1%;margin-bottom: 0%;">15 Workers have applied!</h1>
-                                  <div class="grid">
-                                    <button class="nav-link cta-button1 w-nav-link" style="margin-top: 5%; text-align: center;">View Details</button>
-                                    <button class="nav-link cta-button1 w-nav-link" style="margin-top: 5%; text-align: center;background-color: black;">Mark as Completed!</button>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                              <div class="card" style="width: 95%; margin:0px; padding-left: 5%;">
-                                <div class="card-body" >
-                                  <p class="card-text" style="color: #000; font-size: 200%; font-weight: bold;text-align: start;margin-bottom: 0px;">Tap Leakage in Bathroom</p>
-                                  <h1 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: start; margin-top: 1%; margin-bottom: 0%;">Category: Plumbing</h1>
-                                  <h1 class="card-title" style="color: #616161; font-size: medium; font-weight: bold;text-align: start;margin-top: 2%;margin-bottom: 0%;">Date Published: 11 February 2023</h1>
-                                  <h1 class="card-title" style="color: #a33434; font-size: medium; font-weight: bold;text-align: end;margin-top: 1%;margin-bottom: 0%;">15 Workers have applied!</h1>
-                                  <div class="grid">
-                                    <button class="nav-link cta-button1 w-nav-link" style="margin-top: 5%; text-align: center;">View Details</button>
-                                    <button class="nav-link cta-button1 w-nav-link" style="margin-top: 5%; text-align: center;background-color: black;">Mark as Completed!</button>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                                                            
-                            </div>
-                        </div>
+			<div id="myModal" class="modal">
+				<!-- Modal content -->
+				<form action="/api/client/add/task" method="post">
+                    <div
+                        class="modal-content"
+                        style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px"
+                    >
+                        <span class="close" id="closeBtn">&times;</span>
+                        <h1 style="text-align: center; font-size: 200%; font-weight: bolder">Add a Task!</h1>
+                        <label for="Email-2" class="form-label">Task Title:</label>
+                        <input
+                            type="text"
+                            class="text-field no-margin w-input"
+                            maxlength="256"
+                            name="title"
+                            data-name="Email 2"
+                            placeholder="Enter Task Title"
+                            id="Email-2"
+                            required
+                        />
+                        <br />
+                        <label for="Email-2" class="form-label">Task Description:</label>
+                        <input
+                            type="text"
+                            class="text-field no-margin w-input"
+                            maxlength="256"
+                            name="description"
+                            data-name="Email 2"
+                            placeholder="Enter Task Descriptions"
+                            id="Email-2"
+                            required=""
+                        />
+                        <br />
+                        <label for="Email-2" class="form-label">Category:</label>
+                        <select
+                            name="categoryID"
+                            class="text-field no-margin w-input"
+                            id="dog-names"
+                            style="padding-top: 0%; padding-bottom: 0%; padding-top: 0%; padding-right: 50%; font-size: 100%"
+                        >
+                            <% for(let i=0; i<categories.length; i++) {%>
+                                <option value="<%=categories[i]._id%>"><%=categories[i].name%></option>
+                            <% } %>
+                        </select>
+                        <br />
+                        <br />
+                        <button class="nav-link cta-button1 w-nav-link" type="submit" style="width: 100%; text-align: center">Add Task</button>
                     </div>
-                    
-                    
-                </div>
+                </form>
+			</div>
+		</div>
 
-                <div class="text-box _1500px center-align " style="margin-top: 5%;">
-                    <div class="container" style="width: 100%;">
-                        <div class="row">
-                            <div class="grid">
-                                <h2 class="heading h2" style="margin-bottom:30px; text-align: start;">Previous Tasks</h2>
-                            </div>
-                            <div class="grid" style="width: 100%; padding:0%">
-                              
-                              <div class="card" style="width: 95%; margin:0px; padding-left: 5%;">
-                                <div class="card-body" >
-                                  <p class="card-text" style="color: #000; font-size: 200%; font-weight: bold;text-align: start;margin-bottom: 0px;">Tap Leakage in Bathroom</p>
-                                  <h1 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: start; margin-top: 1%; margin-bottom: 0%;">Category: Plumbing</h1>
-                                  <h1 class="card-title" style="color: #616161; font-size: medium; font-weight: bold;text-align: start;margin-top: 2%;margin-bottom: 0%;">Date Published: 11 February 2023</h1>
-                                  <h1 class="card-title" style="color: #a33434; font-size: medium; font-weight: bold;text-align: end;margin-top: 1%;margin-bottom: 0%;">15 Workers had applied!</h1>
-                                  
-                                </div>
-                              </div>
-                              <div class="card" style="width: 95%; margin:0px; padding-left: 5%;">
-                                <div class="card-body" >
-                                  <p class="card-text" style="color: #000; font-size: 200%; font-weight: bold;text-align: start;margin-bottom: 0px;">Tap Leakage in Bathroom</p>
-                                  <h1 class="card-title" style="color: #710101; font-size: larger; font-weight: bold;margin-top: 0%;text-align: start; margin-top: 1%; margin-bottom: 0%;">Category: Plumbing</h1>
-                                  <h1 class="card-title" style="color: #616161; font-size: medium; font-weight: bold;text-align: start;margin-top: 2%;margin-bottom: 0%;">Date Published: 11 February 2023</h1>
-                                  <h1 class="card-title" style="color: #a33434; font-size: medium; font-weight: bold;text-align: end;margin-top: 1%;margin-bottom: 0%;">15 Workers had applied!</h1>
-                                </div>
-                              </div>                              
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-        </div>
+		<script>
+			// Get the modal
+			var modal = document.getElementById('myModal');
 
-        <div id="myModal" class="modal">
+			// Get the button that opens the modal
+			var btn = document.getElementById('addTask');
 
-            <!-- Modal content -->
-            <div class="modal-content" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px;">
-                <span class="close" id="closeBtn">&times;</span>
-                <h1 style="text-align: center; font-size: 200%; font-weight: bolder;">Add a Task!</h1>
-                <label for="Email-2" class="form-label">Task Title:</label>
-                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Task Title" id="Email-2" required="" />
-                <br>
-                <label for="Email-2" class="form-label">Task Description:</label>
-                <input type="text" class="text-field no-margin w-input" maxlength="256" name="Email-2"data-name="Email 2" placeholder="Enter Task Descriptions" id="Email-2" required="" />
-                <br>
-                <label for="Email-2" class="form-label">Category:</label>
-                <select name="dog-names" class="text-field no-margin w-input" id="dog-names" style="padding-top: 0%;padding-bottom: 0%;padding-top: 0%; padding-right:50%; font-size: 100%;">
-                    <option value="rigatoni">Carpentry</option>
-                    <option value="dave">Plumbing</option>
-                </select>
-                <br>
-                <br>
-                <button class="nav-link cta-button1 w-nav-link" style="width: 100%; text-align: center;">Add Task</button>
-            </div>
-          
-          </div>
-    </div>
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName('close')[0];
 
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
+			// When the user clicks on the button, open the modal
+			btn.onclick = function () {
+				modal.style.display = 'block';
+			};
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("addTask");
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function () {
+				modal.style.display = 'none';
+			};
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function (event) {
+				if (event.target == modal) {
+					modal.style.display = 'none';
+				}
+			};
+		</script>
 
-        // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-        modal.style.display = "block";
-        }
+		<script>
+			// Get the modal
+			var modal = document.getElementById('myModal');
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
+			// Get the button that opens the modal
+			var btn = document.getElementById('addTask1');
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-        }
-    </script>
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName('close')[0];
 
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
+			// When the user clicks on the button, open the modal
+			btn.onclick = function () {
+				modal.style.display = 'block';
+			};
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("addTask1");
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function () {
+				modal.style.display = 'none';
+			};
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-        modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-        }
-    </script>
-</body>
-
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function (event) {
+				if (event.target == modal) {
+					modal.style.display = 'none';
+				}
+			};
+		</script>
+	</body>
 </html>

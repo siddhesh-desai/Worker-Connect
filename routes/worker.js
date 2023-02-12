@@ -13,6 +13,8 @@ router.get('/logout', workerController.logout);
 
 // UI
 router.get('/home', workerController.renderHome);
+router.get('/mywork', workerController.renderMyWorks);
+router.get('/task/:id', workerController.renderTaskWithID);
 
 
 module.exports = router;

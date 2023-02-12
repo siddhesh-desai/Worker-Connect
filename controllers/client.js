@@ -1,7 +1,7 @@
 const Client = require('../models/client');
 const Task = require('../models/task');
 const Worker = require('../models/worker');
-const Category = require("../models/category")
+const Category = require('../models/category');
 const jwt = require('jsonwebtoken');
 
 const CLIENT_ID = '63e638b4b1c25109e8b8aff6';
@@ -37,7 +37,7 @@ const register_post = (req, res, next) => {
 
 const update_profile_post = async (req, res, next) => {
 	// const clientID = req.clientID || CLIENT_ID;
-	const clientID = req.clientID ;
+	const clientID = req.clientID;
 	var updatedClient = {
 		name: req.body.name,
 		email: req.body.email,
@@ -66,7 +66,7 @@ const login_post = async (req, res) => {
 			const token = createClientToken(client._id);
 			res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
 			// res.status(200).json({ data: { client, token }, status: 'success' });
-			res.redirect("/api/client/home")
+			res.redirect('/api/client/home');
 		}
 	} catch (err) {
 		// const errors = handleErrors(err);
@@ -83,7 +83,7 @@ const logout = (req, res) => {
 
 const addTask_post = (req, res, next) => {
 	// const clientID = req.clientID || CLIENT_ID;
-	const clientID = req.clientID ;
+	const clientID = req.clientID;
 	Task.init().then(() => {
 		// safe to create users now.
 		var new_task = new Task({
@@ -95,9 +95,9 @@ const addTask_post = (req, res, next) => {
 		new_task.save(function (err, result) {
 			if (err) {
 				console.log(err.message);
-				res.render("client/login", {errMsg : err.message})
+				res.render('client/login', { errMsg: err.message });
 			} else {
-				res.redirect("/api/client/home")
+				res.redirect('/api/client/home');
 			}
 		});
 	});
@@ -106,19 +106,20 @@ const addTask_post = (req, res, next) => {
 //  http://localhost:3000/user?name=Gourav&age=11
 const negotiateTaskPrice = async (req, res) => {
 	// const clientID = req.clientID || CLIENT_ID;
-	const clientID = req.clientID ;
+	const clientID = req.clientID;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
 		const task = await Task.findById(taskID);
 		const client = await Client.findById(clientID);
 		if (task === null || !task.clientID.equals(clientID)) {
-			return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			// return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
+			return res.render("client/login", {errMsg : 'Access Denied(not Your Task)'})
 		}
 		await Promise.all([
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
-				{ $set: { 'intrestedWorkers.$.clientPrice': req.body.price } }
+				{ $set: { 'intrestedWorkers.$.clientPrice.price': req.body.price, 'intrestedWorkers.$.clientPrice.time': Date.now() } }
 			),
 			await Worker.findByIdAndUpdate(intrestedWorkerID, {
 				$push: {
@@ -128,15 +129,17 @@ const negotiateTaskPrice = async (req, res) => {
 				},
 			}),
 		]);
-		res.status(200).json({ status: 'success', message: 'Client Price added' });
+		// res.status(200).json({ status: 'success', message: 'Client Price added' });
+		res.redirect("/api/client/task/"+taskID)
 	} catch (err) {
-		res.status(500).json({ status: 'fail', message: err.message });
+		// res.status(500).json({ status: 'fail', message: err.message });
+		res.render("client/login", {errMsg : err.message})
 	}
 };
 
 const acceptTaskPrice = async (req, res) => {
 	// const clientID = req.clientID || CLIENT_ID;
-	const clientID = req.clientID ;
+	const clientID = req.clientID;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
@@ -146,7 +149,7 @@ const acceptTaskPrice = async (req, res) => {
 			return res.status(400).json({ status: 'fail', message: 'Access Denied(not Your Task)' });
 		}
 		const notSelectedWokerIDs = task.intrestedWorkers.filter((worker) => !worker.workerID.equals(intrestedWorkerID));
-		const price = task.intrestedWorkers.find((worker) => worker.workerID.equals(intrestedWorkerID)).workerPrice;
+		const price = task.intrestedWorkers.find((worker) => worker.workerID.equals(intrestedWorkerID)).workerPrice.price;
 		await Promise.all([
 			await Task.findOneAndUpdate(
 				{ _id: taskID, 'intrestedWorkers.workerID': intrestedWorkerID },
@@ -180,7 +183,7 @@ const acceptTaskPrice = async (req, res) => {
 
 const rejectTaskWorker = async (req, res) => {
 	// const clientID = req.clientID || CLIENT_ID;
-	const clientID = req.clientID ;
+	const clientID = req.clientID;
 	const taskID = req.query.taskID;
 	const intrestedWorkerID = req.query.workerID;
 	try {
@@ -211,14 +214,14 @@ const rejectTaskWorker = async (req, res) => {
 const renderHome = async (req, res) => {
 	try {
 		let tasks = await Task.find({});
-		for (let i = 0; i < tasks.length; i++){
-			const category = await Category.findById(tasks[i].categoryID)
-			const clientName = await Client.findById(tasks[i].clientID)
-			tasks[i].category = category.name
-			tasks[i].clientName = clientName.name
+		for (let i = 0; i < tasks.length; i++) {
+			const category = await Category.findById(tasks[i].categoryID);
+			const clientName = await Client.findById(tasks[i].clientID);
+			tasks[i].category = category.name;
+			tasks[i].clientName = clientName.name;
 		}
-		const allCategory = await Category.find({})
-		res.render('client/home', { tasks, categories : allCategory });
+		const allCategory = await Category.find({});
+		res.render('client/home', { tasks, categories: allCategory });
 	} catch (err) {
 		res.render('client/login', { errMsg: err.message });
 	}
@@ -227,14 +230,46 @@ const renderHome = async (req, res) => {
 const renderMyTasks = async (req, res) => {
 	const clientID = req.clientID;
 	try {
-		const tasks = await Task.find({ clientID })
-		res.render("client/myTask", {tasks})
+		let tasks = await Task.find({ clientID });
+		// let category;
+		for (let i = 0; i < tasks.length; i++) {
+			const category = await Category.findById(tasks[i].categoryID);
+			// console.log(category.name);
+			tasks[i].category = category.name;
+		}
+		const allCategory = await Category.find({})
+		res.render('client/myTask', { tasks, categories : allCategory });
 	} catch (err) {
-		res.render("client/login", {errMsg : err.message})
+		res.render('client/login', { errMsg: err.message });
+	}
+};
+
+const renderTaskWithID = async (req, res) => {
+	const clientID = req.clientID
+	const taskID = req.params.id
+	try {
+		const task = await Task.findById(taskID)
+		if (!task || !task.clientID.equals(clientID)) {
+			return res.render("client/login", {errMsg : "Task not Belongs to Worker"})
+		}
+		for (let i = 0; i < task.intrestedWorkers.length; i++){
+			const worker = await Worker.findById(task.intrestedWorkers[i].workerID)
+			task.intrestedWorkers[i].workerName = worker.name;
+			let rating = 0;
+			for (let j = 0; j < worker.reviews.length; j++){
+				rating += worker.reviews[i].rating
+			}
+			rating = rating / (5 * worker.reviews.length)
+			task.intrestedWorkers[i].workerRating = rating
+		}
+		res.render("client/taskNego", {task})
+	} catch (err) {
+		res.render("client/login", {errMsg : err.message})	
 	}
 }
 
 module.exports = {
+	renderTaskWithID,
 	register_post,
 	login_post,
 	logout,
@@ -244,5 +279,5 @@ module.exports = {
 	acceptTaskPrice,
 	rejectTaskWorker,
 	renderHome,
-	renderMyTasks
+	renderMyTasks,
 };

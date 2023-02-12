@@ -30,6 +30,7 @@ const taskSchema = new mongoose.Schema({
 			workerID: {
 				type: mongoose.Schema.Types.ObjectId,
 				required: true,
+				unique : true
 			},
 			time: {
 				type: Date,
