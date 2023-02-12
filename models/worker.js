@@ -24,8 +24,10 @@ const workerSchema = new mongoose.Schema({
 	],
 	notification: [
 		{
-			message: String,
-			date: {
+			message: {
+				type : String
+			},
+			ts: {
 				type: Date,
 				default: Date.now(),
 			},

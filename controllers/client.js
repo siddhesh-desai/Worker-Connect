@@ -133,6 +133,7 @@ const negotiateTaskPrice = async (req, res) => {
 				$push: {
 					notification: {
 						message: `Client ${client.name} Want to negotiate on Task : ${task.title}, for a price of ${req.body.price}`,
+						// date : new Date()
 					},
 				},
 			}),
@@ -183,6 +184,7 @@ const acceptTaskPrice = async (req, res) => {
 				$push: {
 					notification: {
 						message: `Client ${client.name} has offer you a Task : ${task.title}, for a price of ${price}$. respective are the name, email, phone number and address of Client. "${client.name}", "${client.email}", "${client.phone}" and "${client.address}"`,
+						// date : new Date()
 					},
 				},
 			}),
@@ -190,6 +192,7 @@ const acceptTaskPrice = async (req, res) => {
 				$push: {
 					notification: {
 						message: `Hello!, Congratulations you have found your perfect match. Respective are the name, email, phone number and address of Worker whose request you have accepted. "${worker.name}", "${worker.email}", "${worker.phone}" and "${worker.address}" `,
+						// date : new Date()
 					},
 				},
 			}),
@@ -200,6 +203,7 @@ const acceptTaskPrice = async (req, res) => {
 					$push: {
 						notification: {
 							message: `Client ${client.name} has book the Task : ${task.title}, So now the task is Closed.`,
+							// date : new Date
 						},
 					},
 				})
@@ -235,6 +239,7 @@ const rejectTaskWorker = async (req, res) => {
 				$push: {
 					notification: {
 						message: `Client ${client.name} has rejected your Task : "${task.title}", now you cannot futher apply for this task.`,
+						// date : new Date()
 					},
 				},
 			}),

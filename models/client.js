@@ -29,7 +29,7 @@ const clientSchema = new mongoose.Schema({
     notification: [
         {
             message: String,
-            date: {
+            ts: {
                 type: Date,
                 default : Date.now()
             }

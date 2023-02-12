@@ -54,7 +54,7 @@
                     <% for(let i=0; i<notifications.length; i++){ %>
                         <div class="message_container" style="text-align: start;border: 1px solid silver;padding: 1rem; border-radius: 5px;background-color: white;">
                             <div class="date_box">
-                                <p><i><%=notifications[i].date.toLocaleString()%></i></p>
+                                <p><i><%=notifications[i].ts.toLocaleString()%></i></p>
                             </div>
                             <div class="message_box" style="font-size: 1.1rem;">
                                 <%=notifications[i].message%>
