@@ -17,7 +17,7 @@
 
   <h3 align="center"><b>Worker-Connect</b></h3>
 
-  <h4>🏆Winner of the 1st Prize at UnScript Rookies Hackathon 2023</h4>
+  <h2>🏆Winner of the 1st Prize at <a href="https://unscript-rookies-hackathon-k.devfolio.co/projects?prizes=3053b1db4c4d423da50280b2119fb983&show_winners=true">UnScript Rookies Hackathon 2k23</a></h2>
 
   <p align="center">
     Worker-Connect is a comprehensive platform designed to bridge the gap between blue-collar workers and individuals in need of their services. 
