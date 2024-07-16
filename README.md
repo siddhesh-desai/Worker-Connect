@@ -17,6 +17,8 @@
 
   <h3 align="center"><b>Worker-Connect</b></h3>
 
+  <h4>🏆Winner of the 1st Prize at UnScript Rookies Hackathon 2023</h4>
+
   <p align="center">
     Worker-Connect is a comprehensive platform designed to bridge the gap between blue-collar workers and individuals in need of their services. 
     <br />
@@ -51,6 +53,33 @@ The web application is built using the MERN stack, which comprises MongoDB, Expr
 Worker-Connect aims to empower blue-collar workers by providing them with a digital platform to showcase their skills, connect with potential clients, and expand their professional opportunities. Simultaneously, the project offers clients a convenient and reliable way to find skilled workers for their specific job requirements. With its user-friendly interface and comprehensive features, Worker-Connect contributes to fostering a collaborative and efficient ecosystem for blue-collar services.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 🚀 Demo
+<div align="center">
+    <h4 align="left">Admin Dashboard</h4>
+    <img src="images/wc1.jpeg" alt="Logo">
+    <br>
+    <br>
+    <h4 align="left">Worker Verification</h4>
+    <img src="images/wc2.jpeg" alt="Logo">
+    <br>
+    <br>
+    <h4 align="left">User Adding Task</h4>
+    <img src="images/wc3.jpeg" alt="Logo">
+    <br>
+    <br>
+    <h4 align="left">Listing all Tasks/Jobs for Workers</h4>
+    <img src="images/wc4.jpeg" alt="Logo">
+    <br>
+    <br>
+    <h4 align="left">Notifications</h4>
+    <img src="images/wc5.jpeg" alt="Logo">
+
+</div>
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## ⚙️ Built With
 
